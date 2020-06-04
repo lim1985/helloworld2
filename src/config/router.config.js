@@ -1,4 +1,4 @@
-import { RouteView, QMSMView} from "@/components/layouts";
+import { RouteView, QMSMView } from "@/components/layouts";
 
 export const constantRouterMap = [
   {
@@ -10,48 +10,46 @@ export const constantRouterMap = [
       {
         path: "/report",
         name: "Report",
-        component: () => import('@/views/report'),
+        component: () => import("@/views/report")
         // component: () =>
         //   import(/* webpackChunkName: "report" */ "@/views/report")
       },
       {
         path: "/index",
         name: "index",
-        component: () => import('@/views/index'),
+        component: () => import("@/views/index")
         // component: () =>
         // import(/* webpackChunkName: "update" */ "@/views/update")
       },
       {
         path: "/qr",
         name: "qr",
-        component: () => import('@/views/qrCode'),
+        component: () => import("@/views/qrCode")
         // component: () =>
         // import(/* webpackChunkName: "QR" */ "@/views/qrCode")
       },
       {
         path: "/update",
         name: "Update",
-        component: () => import('@/views/update'),
+        component: () => import("@/views/update")
         // component: () =>
         // import(/* webpackChunkName: "update" */ "@/views/update")
-      }, 
+      },
       {
         path: "/addUser",
         name: "AddUser",
-        component: () => import('@/views/UserReportAdd'),
-        
-      }, 
+        component: () => import("@/views/UserReportAdd")
+      },
       {
         path: "/datacount",
         name: "Datacount",
-        component: () => import('@/views/datacount'),
-        
-      }, {
+        component: () => import("@/views/datacount")
+      },
+      {
         path: "/personList",
         name: "PersonList",
-        component: () => import('@/views/personList'),
-        
-      },
+        component: () => import("@/views/personList")
+      }
       //  {
       //   path: "navigations",
       //   name: "navigations",
@@ -59,87 +57,82 @@ export const constantRouterMap = [
       //     import(/* webpackChunkName: "navigations" */ "@/views/navigations")
       // }
     ]
-  },  
+  },
   {
-    path:'/count',
-    name:'count',
+    path: "/count",
+    name: "count",
     redirect: "/dxrmallcount",
     hidden: true,
     component: QMSMView,
-    children: [ 
+    children: [
       {
         path: "/dxrmallcount",
         name: "dxrmallcount",
-        component: () => import('@/views/dxrmallcount'),
-        
-      },
-    ]   
+        component: () => import("@/views/dxrmallcount")
+      }
+    ]
   },
   {
-    path:'/qmsm',
-    name:'qmsm',
+    path: "/qmsm",
+    name: "qmsm",
     redirect: "/qmsm",
     hidden: true,
     component: QMSMView,
-    children: [ 
+    children: [
       {
         path: "/qmsm",
         name: "qmsmUrl",
-        component: () => import('@/views/qingming'),
-        
-      },
-    ]   
+        component: () => import("@/views/qingming")
+      }
+    ]
   },
   {
-    path:'/qm',
-    name:'qm',
+    path: "/qm",
+    name: "qm",
     redirect: "/qm",
     hidden: true,
     component: QMSMView,
-    children: [ 
+    children: [
       {
         path: "/qm",
         name: "qmUrl",
-        component: () => import('@/views/qm'),
-        
-      },
-    ]   
+        component: () => import("@/views/qm")
+      }
+    ]
   },
   {
-      path:'/goto',//gotoSecretKeyUrl
-      name:'goto',
-    
-      // hidden: true,
-      component:() => import('@comp/GOTO/goto'), 
-    },
-    {
-      path:'/GETDXRM',
-      name:'GETDXRM',
-    
-      // hidden: true,
-      component:() => import('@/views/dxrm'),
-    },
-    {
-      path:'/Uniformlogin',
-      name:'Uflogin',
-    
-      // hidden: true,
-      component:() => import('@/views/uninform/login'),
-    },
-    {
-      path:'/Uniformlist',
-      name:'Uflist',
-    
-      // hidden: true,
-      component:() => import('@/views/uninform/list'),
-    }
-    ,
-    {
-      path:'/Uniformadd',
-      name:'UfAdd',
-    
-      // hidden: true,
-      component:() => import('@/views/uninform/add'),
-    }
+    path: "/goto", //gotoSecretKeyUrl
+    name: "goto",
+
+    // hidden: true,
+    component: () => import("@comp/GOTO/goto")
+  },
+  {
+    path: "/GETDXRM",
+    name: "GETDXRM",
+
+    // hidden: true,
+    component: () => import("@/views/dxrm")
+  },
+  {
+    path: "/Uniformlogin",
+    name: "Uflogin",
+
+    // hidden: true,
+    component: () => import("@/views/uninform/login")
+  },
+  {
+    path: "/Uniformlist",
+    name: "Uflist",
+
+    // hidden: true,
+    component: () => import("@/views/uninform/list")
+  },
+  {
+    path: "/Uniformadd",
+    name: "UfAdd",
+
+    // hidden: true,
+    component: () => import("@/views/uninform/add")
+  }
 ];
- 

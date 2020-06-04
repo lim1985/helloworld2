@@ -5,15 +5,14 @@
     <img v-lazy="image" />
   </van-swipe-item>
 </van-swipe> -->
-   
+
     <!-- src="https://img.yzcdn.cn/vant/cat.jpeg" -->
     <!-- <h1>{{ msg }}</h1> -->
     <!-- <van-cell-group>
   <van-field v-model="text" placeholder="请输入用户名" />
 </van-cell-group> -->
-   
-  
-   <!-- <van-panel v-show="isPhone" title="">
+
+    <!-- <van-panel v-show="isPhone" title="">
       <div>
  <van-grid clickable :column-num="3">
   <van-grid-item icon="qr" text="生成二维码" to="/" />
@@ -22,8 +21,6 @@
 </van-grid>
       </div>
     </van-panel> -->
-
-
 
     <van-panel v-show="isshowReport" class="panel-title" title="请填写个人信息">
       <div>
@@ -420,12 +417,10 @@
             </van-radio-group>
           </van-field>
         </div>
-         <van-button 
-         v-if="isok"        
-          @click="isupdate"
-          type="primary"
-          >确认修改</van-button>  
-      <!-- <div v-if="isConfirm" class="van-hairline--top">
+        <van-button v-if="isok" @click="isupdate" type="primary"
+          >确认修改</van-button
+        >
+        <!-- <div v-if="isConfirm" class="van-hairline--top">
           <van-field
             @input="check"
             v-model="Report.ck"
@@ -470,11 +465,11 @@ cancel -->
 </template>
 
 <script>
-  import { mapState} from 'vuex'
-import Vue from 'vue'
-import { Tel ,MD5Tel ,IsEdit,ReportId} from "@/store/mutation-types"//ReportId
+import { mapState } from "vuex";
+import Vue from "vue";
+import { Tel, MD5Tel, IsEdit, ReportId } from "@/store/mutation-types"; //ReportId
 // import { navigations } from "@/components/nav";
-  // import navigations from '@/components/nav/'
+// import navigations from '@/components/nav/'
 // Vue.filter('dateformat',function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss'){return moment(dataStr).format(pattern)})
 import {
   reportUpdate,
@@ -490,18 +485,17 @@ import _ from "lodash";
 //  var moment = require('moment');
 export default {
   name: "update",
-    components: {    
+  components: {
     //  navigations
-    },
+  },
   props: {
     msg: String
   },
   mounted() {
     this.init_palceMap();
-    this.auth();    
+    this.auth();
   },
   data() {
-    
     // let NowInputTimes=moment().format('YYYY-MM-DD HH:mm:ss')
 
     this.phoneRules = [
@@ -519,9 +513,7 @@ export default {
     ];
 
     return {
-      
-    
-      isshowReport:true,
+      isshowReport: true,
       buttonType: "info",
       buttonloading: false,
       smsloading: "",
@@ -561,12 +553,12 @@ export default {
       sms: "",
       smsaction: "发送短信验证码",
       Report: {
-        ck:'',       
+        ck: "",
         C_class_jiechu_type: "",
         name: "",
         // tel	nvarchar(14),
         tel: "",
-        RealTel:"",
+        RealTel: "",
         // sex bit,
         sex: "1",
         // idcard nvarchar(20),
@@ -629,62 +621,59 @@ export default {
         // B_class_LkhbDate: '',
         // isOK bit
         isOK: "0",
-        EditCount:0,
-        EditTime:null
+        EditCount: 0,
+        EditTime: null
       },
-      mytel:'',
-      EditCount:0,
-      MD5TEL:'',
-      isok:true,
-    
+      mytel: "",
+      EditCount: 0,
+      MD5TEL: "",
+      isok: true
     };
   },
-       computed:{    
-      ...mapState({
-        VXReportId:state=>state.user.ReportId,        
-      })    
-    },
+  computed: {
+    ...mapState({
+      VXReportId: state => state.user.ReportId
+    })
+  },
   methods: {
-      check: _.debounce(function(val) {
-      checkCaptcha({ mobile: this.Report.tel, captcha: val }).then(async res => {
-        console.log(res);
-        if (res.data.code == -1) {
-          this.$toast.fail("验证码无效无法操作");
-          return;
-        }
-        if (res.data.result.code == 1000) {
-          // this.buttondisabled = false;
-          console.log(`收到`)
+    check: _.debounce(function(val) {
+      checkCaptcha({ mobile: this.Report.tel, captcha: val }).then(
+        async res => {
+          console.log(res);
+          if (res.data.code == -1) {
+            this.$toast.fail("验证码无效无法操作");
+            return;
+          }
+          if (res.data.result.code == 1000) {
+            // this.buttondisabled = false;
+            console.log(`收到`);
 
-          let result=await reportUpdate(this.Report);
-          console.log(result)
-          if(result.data.html==true)
-          {
+            let result = await reportUpdate(this.Report);
+            console.log(result);
+            if (result.data.html == true) {
               this.$toast.success("记录修改成功");
-              this.$router.push({path:'/report'})
-          }
-          else
-          {
+              this.$router.push({ path: "/report" });
+            } else {
               this.$toast.fail(result.data.msg);
-                Vue.ls.set(IsEdit,false);
+              Vue.ls.set(IsEdit, false);
+            }
+
+            // let mymd5=this.$md5(this.Report.tel+''+val);
+            // Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
+            // Vue.ls.set(Tel, this.Report.tel, 7 * 24 * 60 * 60 * 1000);
+            // // localStorage
+            // // ls.setitem(mymd5,)
+            //   console.log(mymd5)
+            // //  this.$message.success(res.data.result.msg)
+            // this.$toast.success("验证成功");
+            // this.isPhone = false;
+            // this.isnav=false;
           }
-          
-          // let mymd5=this.$md5(this.Report.tel+''+val);
-          // Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
-          // Vue.ls.set(Tel, this.Report.tel, 7 * 24 * 60 * 60 * 1000);
-          // // localStorage
-          // // ls.setitem(mymd5,)
-          //   console.log(mymd5)
-          // //  this.$message.success(res.data.result.msg)
-          // this.$toast.success("验证成功");
-          // this.isPhone = false;
-          // this.isnav=false;
         }
-      });
+      );
     }, 1000),
     async getSms() {
       console.log("获取短信");
-
 
       setTimeout(() => {
         sendVerification({ mobile: this.Report.tel }).then(res => {
@@ -692,12 +681,11 @@ export default {
           //     buttonloading :false,
           // smsloading:'短信发送中...',
           let data = res.data._result;
-           console.log(data)
+          console.log(data);
           // this.smsdisabled = true;
           // if (data.rspcod == "success" && data.success == true) {
 
-        
-          //   this.$refs.nav.go(this.Report.tel);         
+          //   this.$refs.nav.go(this.Report.tel);
           //   this.$toast.success("短信发送成功请等待!");
           //   this.buttonloading = false;
           //   this.buttonType = "primary";
@@ -714,49 +702,43 @@ export default {
 
       console.log(this.Report);
     },
-    isupdate(){
-      this.$dialog.confirm({
-  title: '修改个人信息',
-  message: `确认修改么？您还有${this.EditCount}次修改权限。`
-}).then(async() => {
+    isupdate() {
+      this.$dialog
+        .confirm({
+          title: "修改个人信息",
+          message: `确认修改么？您还有${this.EditCount}次修改权限。`
+        })
+        .then(async () => {
+          this.isok = false;
 
-  this.isok=false
-  
-  // this.getSms();
-   let result=await reportUpdate(this.Report);
-          console.log(result)
-          if(result.data.html==true)
-          {
-              this.$toast.success("记录修改成功");
-              this.$router.push({path:'/report'})
+          // this.getSms();
+          let result = await reportUpdate(this.Report);
+          console.log(result);
+          if (result.data.html == true) {
+            this.$toast.success("记录修改成功");
+            this.$router.push({ path: "/report" });
+          } else {
+            this.$toast.fail(result.data.msg);
+            Vue.ls.set(IsEdit, false);
           }
-          else
-          {
-              this.$toast.fail(result.data.msg);
-                Vue.ls.set(IsEdit,false);
-          }
-         
-}).catch(() => {
-  // on cancel
-});
+        })
+        .catch(() => {
+          // on cancel
+        });
     },
-    backReport()
-    {
-      console.log('回来了')
-      this.isshowReport=true
-      this.isPhone=true
-     },
-    auth(){
-       this.mytel=Vue.ls.get(Tel)
-       this.MD5TEL=Vue.ls.get(MD5Tel)    
-      if(this.MD5TEL)
-      {
-           this.getUserInfo();         
-      }
-      else
-      {
-         this.$router.push({path:'/'})  
-         return false   
+    backReport() {
+      console.log("回来了");
+      this.isshowReport = true;
+      this.isPhone = true;
+    },
+    auth() {
+      this.mytel = Vue.ls.get(Tel);
+      this.MD5TEL = Vue.ls.get(MD5Tel);
+      if (this.MD5TEL) {
+        this.getUserInfo();
+      } else {
+        this.$router.push({ path: "/" });
+        return false;
       }
     },
     IdCardValidator(val) {
@@ -769,55 +751,53 @@ export default {
       return /1\d{10}/.test(val);
     },
 
-    getUserInfo()
-    {
-      let id
-      // let id=  Vue.ls.get(ReportId)    
+    getUserInfo() {
+      let id;
+      // let id=  Vue.ls.get(ReportId)
       // let id=this.VXReportId;
-      this.VXReportId?id=this.VXReportId:id=Vue.ls.get(ReportId)  
+      this.VXReportId ? (id = this.VXReportId) : (id = Vue.ls.get(ReportId));
       setTimeout(() => {
         getUserInfo({ ReportId: id }).then(res => {
-        console.log(res);
-     
-        let data=res.data.html
-        this.EditCount=3-data.EditCount
-        this.Report.A_class=!data.A_class?"0":"1"
-        this.Report.A_class_LkhbDate=data.A_class_LkhbDate
-        this.Report.B_class=!data.B_class?"0":"1"
-        this.Report.C_class=!data.C_class?"0":"1"
-        this.Report.C_class_jiechuDate=data.C_class_jiechuDate
-        this.Report.C_class_jiechu_type=data.C_class_jiechu_type
-        this.Report.CunSheQu=data.CunSheQu
-        this.Report.idcard=data.idcard
-        this.Report.D_class=!data.D_class?"0":"1"
-        this.Report.D_class_LkwhDate=data.D_class_LkwhDate
-        this.Report.EditCount=parseInt(data.EditCount)
-        this.Report.FJaddress=data.FJsheng+","+data.FJshi+","+data.FJquxian
-        this.Report.LS_14_before=!data.LS_14_before?"0":"1"
-        this.Report.LS_muDi=data.LS_muDi       
-        this.Report.LS_workArea=data.LS_workArea   
-        this.Report.LS_workType= data.LS_workType   
-        this.Report.ReportId= data.ReportId   
-        this.Report.carNum= data.carNum   
-        this.Report.fangHao= data.fangHao  
-        this.Report.hangBan= data.hangBan  
-        this.Report.isOK= !data.isOK?"0":"1"  
-        this.Report.jieShudi= data.jieShudi  
-        this.Report.juzhuType= data.juzhuType
-        this.Report.kaiShidi=  data.kaiShidi
-        this.Report.louDong= data.louDong
-        this.Report.muDidi= data.muDidi
-        this.Report.name= data.name
-        this.Report.sex= !data.sex?"0":"1"
-        this.Report.tel= data.tel
-        this.Report.xiangZhen= data.xiangZhen
-        this.Report.xiaoQu=data.xiaoQu
+          console.log(res);
 
-        console.log(this.Report)
-     
-     
-      });
-      }, 500);      
+          let data = res.data.html;
+          this.EditCount = 3 - data.EditCount;
+          this.Report.A_class = !data.A_class ? "0" : "1";
+          this.Report.A_class_LkhbDate = data.A_class_LkhbDate;
+          this.Report.B_class = !data.B_class ? "0" : "1";
+          this.Report.C_class = !data.C_class ? "0" : "1";
+          this.Report.C_class_jiechuDate = data.C_class_jiechuDate;
+          this.Report.C_class_jiechu_type = data.C_class_jiechu_type;
+          this.Report.CunSheQu = data.CunSheQu;
+          this.Report.idcard = data.idcard;
+          this.Report.D_class = !data.D_class ? "0" : "1";
+          this.Report.D_class_LkwhDate = data.D_class_LkwhDate;
+          this.Report.EditCount = parseInt(data.EditCount);
+          this.Report.FJaddress =
+            data.FJsheng + "," + data.FJshi + "," + data.FJquxian;
+          this.Report.LS_14_before = !data.LS_14_before ? "0" : "1";
+          this.Report.LS_muDi = data.LS_muDi;
+          this.Report.LS_workArea = data.LS_workArea;
+          this.Report.LS_workType = data.LS_workType;
+          this.Report.ReportId = data.ReportId;
+          this.Report.carNum = data.carNum;
+          this.Report.fangHao = data.fangHao;
+          this.Report.hangBan = data.hangBan;
+          this.Report.isOK = !data.isOK ? "0" : "1";
+          this.Report.jieShudi = data.jieShudi;
+          this.Report.juzhuType = data.juzhuType;
+          this.Report.kaiShidi = data.kaiShidi;
+          this.Report.louDong = data.louDong;
+          this.Report.muDidi = data.muDidi;
+          this.Report.name = data.name;
+          this.Report.sex = !data.sex ? "0" : "1";
+          this.Report.tel = data.tel;
+          this.Report.xiangZhen = data.xiangZhen;
+          this.Report.xiaoQu = data.xiaoQu;
+
+          console.log(this.Report);
+        });
+      }, 500);
     },
 
     checkTels: _.debounce(function(val) {
@@ -970,8 +950,8 @@ export default {
     init_palceMap() {
       this.columns = placesMap;
       console.log(placesMap);
-    },
-  
+    }
+
     //   check:_.debounce(function(val){
 
     //   checkCaptcha(val).then(res=>{
@@ -979,7 +959,6 @@ export default {
     // //    })
     //   },1000),
 
-    
     // 校验函数返回 true 表示校验通过，false 表示不通过
   }
 };

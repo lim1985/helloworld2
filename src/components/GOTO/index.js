@@ -3,4 +3,4 @@ import goto from "@/components/GOTO/goto";
 // import TreeList from '@/views/other/TreeList'
 // import AcUserLayout from '@/components/layouts/AcUserLayout'
 
-export  { goto };
+export { goto };

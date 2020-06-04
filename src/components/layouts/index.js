@@ -7,4 +7,4 @@ import QMSMView from "@/components/layouts/QMSMView";
 // import TreeList from '@/views/other/TreeList'
 // import AcUserLayout from '@/components/layouts/AcUserLayout'
 
-export { RouteView,QMSMView };
+export { RouteView, QMSMView };

@@ -2,25 +2,30 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 // import Button from 'vant/lib/button';
-import md5 from 'js-md5';
-import Storage from 'vue-ls'
+import md5 from "js-md5";
+import Storage from "vue-ls";
 //  Grid, GridItem } from 'vant';
-import store from './store/'
+import store from "./store/";
 // Vue.use(Grid);
 // Vue.use(GridItem);
-import VueClipboard from 'vue-clipboard2'
-import { UserInfo,NodeID } from "@/store/mutation-types"
+import VueClipboard from "vue-clipboard2";
+import { UserInfo, NodeID } from "@/store/mutation-types";
+
+// 全局注册
 
 import {
- 
+  ImagePreview,
+  ActionSheet ,
+  List,
   Uploader,
   Calendar,
-  Tab, Tabs ,
+  Tab,
+  Tabs,
   Form,
-  Cell,  
+  Cell,
   Dialog,
-  Grid, 
-  GridItem ,
+  Grid,
+  GridItem,
   Image,
   Lazyload,
   Swipe,
@@ -51,38 +56,35 @@ import "vant/lib/index.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import moment from "moment";
-import config from '@/defaultConfig'
-router.beforeEach((to,form,next)=>{
-  const nextRoute = ['Uflist', 'UfAdd'];
-  let node=Vue.ls.get(NodeID)||false
-  let _UserInfo=Vue.ls.get(UserInfo)||false
-  console.log(_UserInfo)
-  console.log(node)
-  if(to.name=='Uflogin')
-  {
-    if(!node || !_UserInfo)
-    { 
-    next();
-    return 
+import config from "@/defaultConfig";
+router.beforeEach((to, form, next) => {
+  const nextRoute = ["Uflist", "UfAdd"];//需要验证的页面
+  let node = Vue.ls.get(NodeID) || false;
+  let _UserInfo = Vue.ls.get(UserInfo) || false;
+
+  if (to.name == "Uflogin") {
+    if (!node || !_UserInfo) {
+      next();
+      return;
     }
-    console.log(`到这里了`)
-    next({ name : 'Uflist'});
-    return 
-    
+    console.log(`到这里了`);
+    next({ name: "Uflist" });
+    return;
   }
-  if(nextRoute.indexOf(to.name) >= 0) { //判断该页面是否需要登陆
-    console.log(!node)
-    if(!node || !_UserInfo){ //判断登陆状态
-     next({ name : 'Uflogin'}) //如果未登录，则跳转到登录页
+  if (nextRoute.indexOf(to.name) >= 0) {
+    //判断该页面是否需要登陆
+    console.log(!node);
+    if (!node || !_UserInfo) {
+      //判断登陆状态
+      next({ name: "Uflogin" }); //如果未登录，则跳转到登录页
     } else {
-      next()   //如果已经登陆，那就可以跳转
+      next(); //如果已经登陆，那就可以跳转
     }
-    } 
-    else
-    { //其他的无需登陆的页面不做验证
-     next()
-    }
-})
+  } else {
+    //其他的无需登陆的页面不做验证
+    next();
+  }
+});
 
 // name:'Uflogin',
 // name:'Uflist',
@@ -113,13 +115,13 @@ router.beforeEach((to,form,next)=>{
 //         console.log(node)
 //         console.log(`到这里了么？？？`)
 //         router.push({name:'Uflogin'})
-     
+
 //       }
 //   }
 //   if (to.name === 'Uflogin') {
 //     if (node) {
 //       router.push({ name: 'Uflist' });
-//     }   
+//     }
 //   }
 // console.log(`到这里了？`)
 //   next();
@@ -129,9 +131,11 @@ Vue.prototype.$moment = moment; //赋值使用
 Vue.prototype.$md5 = md5; //MD5
 Vue.prototype.$store = store; //MD5
 Vue.use(Lazyload, {
-  lazyComponent: true,
+  lazyComponent: true
 });
-
+Vue.use(ImagePreview);
+Vue.use(ActionSheet);
+Vue.use(List);
 Vue.use(Loading);
 Vue.use(Calendar);
 Vue.use(VueClipboard);
@@ -146,7 +150,7 @@ Vue.use(Form);
 Vue.use(NavBar);
 Vue.use(Overlay);
 Vue.use(CellGroup);
-Vue.use(Storage, config.storageOptions)
+Vue.use(Storage, config.storageOptions);
 Vue.use(Icon);
 Vue.use(GridItem);
 Vue.use(Grid);
@@ -171,15 +175,14 @@ Vue.use(Field);
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
-
 Vue.use(Uploader);
 
 new Vue({
   router,
   store,
-  mounted () {
-    let _UserInfo= Vue.ls.get(UserInfo)
-    store.commit('SET_Userinfo', _UserInfo)
+  mounted() {
+    let _UserInfo = Vue.ls.get(UserInfo);
+    store.commit("SET_Userinfo", _UserInfo);
   },
   render: h => h(App)
 }).$mount("#app");

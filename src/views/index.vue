@@ -5,7 +5,7 @@
     <img v-lazy="image" />
   </van-swipe-item>
 </van-swipe> -->
-   
+
     <!-- src="https://img.yzcdn.cn/vant/cat.jpeg" -->
     <!-- <h1>{{ msg }}</h1> -->
     <!-- <van-cell-group>
@@ -44,8 +44,8 @@
         </van-field>
       </div>
     </van-panel>
-    <navigations  @ok="backReport"  ref="nav" :show="isnav" msg="我的导航组件" />
-   <!-- <van-panel v-show="isPhone" title="">
+    <navigations @ok="backReport" ref="nav" :show="isnav" msg="我的导航组件" />
+    <!-- <van-panel v-show="isPhone" title="">
       <div>
  <van-grid clickable :column-num="3">
   <van-grid-item icon="qr" text="生成二维码" to="/" />
@@ -54,8 +54,6 @@
 </van-grid>
       </div>
     </van-panel> -->
-
-
 
     <van-panel v-show="isshowReport" class="panel-title" title="请填写个人信息">
       <div>
@@ -490,11 +488,11 @@ cancel -->
 </template>
 
 <script>
-import Vue from 'vue'
-import { Tel ,MD5Tel,ReportId,IsshowNav} from "@/store/mutation-types"
+import Vue from "vue";
+import { Tel, MD5Tel, ReportId, IsshowNav } from "@/store/mutation-types";
 import { navigations } from "@/components/nav";
-  // import { mapState} from 'vuex'
-  // import navigations from '@/components/nav/'
+// import { mapState} from 'vuex'
+// import navigations from '@/components/nav/'
 // Vue.filter('dateformat',function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss'){return moment(dataStr).format(pattern)})
 import {
   getUserInfo,
@@ -509,28 +507,26 @@ import _ from "lodash";
 //  var moment = require('moment');
 export default {
   name: "HelloWorld",
-    components: {    
-     navigations
-    },
-    //     computed:{    
-    //   ...mapState({
-    //     VXReportId:state=>state.user.ReportId,        
-    //   })    
-    // },
+  components: {
+    navigations
+  },
+  //     computed:{
+  //   ...mapState({
+  //     VXReportId:state=>state.user.ReportId,
+  //   })
+  // },
   props: {
     msg: String
   },
-  create(){
-       console.log(Vue.ls.get(IsshowNav))
-     this.isnav=Vue.ls.get(IsshowNav)
+  create() {
+    console.log(Vue.ls.get(IsshowNav));
+    this.isnav = Vue.ls.get(IsshowNav);
   },
   mounted() {
-   
     this.init_palceMap();
     this.auth();
   },
   data() {
-    
     // let NowInputTimes=moment().format('YYYY-MM-DD HH:mm:ss')
 
     this.phoneRules = [
@@ -548,9 +544,9 @@ export default {
     ];
 
     return {
-      isnav:false,
-      isshowUpdate:false,
-      isshowReport:false,
+      isnav: false,
+      isshowUpdate: false,
+      isshowReport: false,
       buttonType: "info",
       buttonloading: false,
       smsloading: "",
@@ -594,7 +590,7 @@ export default {
         name: "",
         // tel	nvarchar(14),
         tel: "",
-        RealTel:"",
+        RealTel: "",
         // sex bit,
         sex: "1",
         // idcard nvarchar(20),
@@ -661,22 +657,18 @@ export default {
     };
   },
   methods: {
-    backReport()
-    {
-      console.log('回来了')
-      this.isshowReport=true
-      this.isPhone=false
-    
-     },
-    auth(){
-
-      let telmd5=Vue.ls.get(Tel)
+    backReport() {
+      console.log("回来了");
+      this.isshowReport = true;
+      this.isPhone = false;
+    },
+    auth() {
+      let telmd5 = Vue.ls.get(Tel);
       console.log(telmd5);
-      if(telmd5)
-      {
-          this.isPhone=false;
-          this.isnav=false;
-          this.buttondisabled=false
+      if (telmd5) {
+        this.isPhone = false;
+        this.isnav = false;
+        this.buttondisabled = false;
       }
     },
     IdCardValidator(val) {
@@ -692,16 +684,14 @@ export default {
       //  console.log(val)
       CheckTel({ tel: val }).then(res => {
         console.log(res);
-        if (res.data.html) //返回值为真true
-        {
+        if (res.data.html) {
+          //返回值为真true
           // this.$toast.fail("您已经提交成功，请不要重复提交记录");
           // this.buttondisabled = true;
           // this.smsdisabled = true;
           // return false;
-           this.smsdisabled = false;
-        }
-         else 
-        {
+          this.smsdisabled = false;
+        } else {
           this.smsdisabled = false;
         }
       });
@@ -709,41 +699,36 @@ export default {
 
     sumitreport() {
       this.Report.inputTime = this.$moment().format("YYYY-MM-DD");
-          console.log(Vue.ls.get(ReportId))
-          if(Vue.ls.get(ReportId)==null)
-          {
-            reportAdd(this.Report).then(res => {
-              console.log(res);
-              if (res.data.html.ReportId > 0) 
-              {
-                this.$toast.success("提交成功,谢谢您的参与！");
-                let reportId=res.data.html.ReportId
-                this.buttondisabled = true;
-                Vue.ls.set(ReportId, reportId);
-                this.$store.commit('SET_ReportId',reportId)
-                         
-              }
-            });
+      console.log(Vue.ls.get(ReportId));
+      if (Vue.ls.get(ReportId) == null) {
+        reportAdd(this.Report).then(res => {
+          console.log(res);
+          if (res.data.html.ReportId > 0) {
+            this.$toast.success("提交成功,谢谢您的参与！");
+            let reportId = res.data.html.ReportId;
+            this.buttondisabled = true;
+            Vue.ls.set(ReportId, reportId);
+            this.$store.commit("SET_ReportId", reportId);
           }
-              this.$toast.fail("提交失败，请不要重复提交只能修改");
+        });
+      }
+      this.$toast.fail("提交失败，请不要重复提交只能修改");
 
-  // CheckTel({ tel: val }).then(res => {
-  //       console.log(res);
-  //       if (res.data.html) //返回值为真true
-  //       {
-  //         this.$toast.fail("您已经提交成功，请不要重复提交记录");
-  //         this.buttondisabled = true;
-  //         this.smsdisabled = true;
-  //         return false;
-  //       }
-  //        else 
-  //       {
-  //         this.smsdisabled = false;
-  //       }
-  //     });
+      // CheckTel({ tel: val }).then(res => {
+      //       console.log(res);
+      //       if (res.data.html) //返回值为真true
+      //       {
+      //         this.$toast.fail("您已经提交成功，请不要重复提交记录");
+      //         this.buttondisabled = true;
+      //         this.smsdisabled = true;
+      //         return false;
+      //       }
+      //        else
+      //       {
+      //         this.smsdisabled = false;
+      //       }
+      //     });
 
-
-     
       console.log(this.Report);
     },
     is_ok(val) {
@@ -872,46 +857,42 @@ export default {
       console.log(placesMap);
     },
     check: _.debounce(function(val) {
-      checkCaptcha({ mobile: this.Report.tel, captcha: val }).then(async res => {
-        console.log(res);
-        if (res.data.code == -1) {
-          this.$toast.fail("验证码无效");
-          return;
-        }
-        if (res.data.result.code == 1000) {
+      checkCaptcha({ mobile: this.Report.tel, captcha: val }).then(
+        async res => {
+          console.log(res);
+          if (res.data.code == -1) {
+            this.$toast.fail("验证码无效");
+            return;
+          }
+          if (res.data.result.code == 1000) {
+            let userinfo = await getUserInfo({ tel: this.Report.tel });
+            console.log(userinfo);
+            // code: -1, msg: "查无记录"}
+            let _data = userinfo.data.html;
+            let mymd5 = this.$md5(this.Report.tel + "" + val);
+            if (_data.code == -1) {
+              Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
+              Vue.ls.set(Tel, this.Report.tel);
+            } else {
+              Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
+              Vue.ls.set(ReportId, _data.ReportId);
+              Vue.ls.set(Tel, this.Report.tel);
+              this.$store.commit("SET_ReportId", _data.ReportId);
+            }
+            // let _reportID=userinfo.data.html.ReportId
+            // if()
+            this.buttondisabled = false;
+            this.isPhone = false;
+            this.isnav = true;
 
-          let userinfo=await getUserInfo({tel:this.Report.tel})
-          console.log(userinfo)
-          // code: -1, msg: "查无记录"}
-          let _data=userinfo.data.html
-          let mymd5=this.$md5(this.Report.tel+''+val);
-          if(_data.code==-1)
-          {
-             Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
-             Vue.ls.set(Tel, this.Report.tel);
+            this.$toast.success("验证成功");
+            // localStorage
+            // ls.setitem(mymd5,)
+
+            //  this.$message.success(res.data.result.msg)
           }
-          else
-          {
-          Vue.ls.set(MD5Tel, mymd5, 7 * 24 * 60 * 60 * 1000);
-          Vue.ls.set(ReportId, _data.ReportId);
-          Vue.ls.set(Tel, this.Report.tel);
-          this.$store.commit('SET_ReportId', _data.ReportId)
-          }
-          // let _reportID=userinfo.data.html.ReportId
-          // if()
-          this.buttondisabled = false;
-          this.isPhone = false;
-          this.isnav=true;
-   
-        
-          this.$toast.success("验证成功");
-          // localStorage
-          // ls.setitem(mymd5,)
-         
-          //  this.$message.success(res.data.result.msg)  
         }
-      
-      });
+      );
     }, 1000),
     //   check:_.debounce(function(val){
 
@@ -934,15 +915,12 @@ export default {
 
           this.smsdisabled = true;
           if (data.rspcod == "success" && data.success == true) {
-
-        
-            this.$refs.nav.go(this.Report.tel);         
+            this.$refs.nav.go(this.Report.tel);
             this.$toast.success("短信发送成功请等待!");
             this.buttonloading = false;
             this.buttonType = "primary";
-            this.Report.RealTel
+            this.Report.RealTel;
             this.smsaction = "短信发送成功";
-
           } else {
             this.$toast.fail("手机号不正确请重新输入");
             this.buttonloading = false;

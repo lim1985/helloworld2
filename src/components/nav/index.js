@@ -3,4 +3,4 @@ import navigations from "@/components/nav/navigations";
 // import TreeList from '@/views/other/TreeList'
 // import AcUserLayout from '@/components/layouts/AcUserLayout'
 
-export  { navigations };
+export { navigations };

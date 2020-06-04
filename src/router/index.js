@@ -28,10 +28,10 @@ Vue.use(Router);
 //   return routerPush.call(this, location).catch(error=> error)
 // }
 
-const routerPush = Router.prototype.push
+const routerPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch(error=> error)
-}
+  return routerPush.call(this, location).catch(error => error);
+};
 export default new Router({
   mode: "hash",
   base: process.env.BASE_URL,

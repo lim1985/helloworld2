@@ -1,5 +1,6 @@
 // import Vue from 'vue'
 import axios from "axios";
+// var root =process.env.API_ROOT
 // import store from '@/store'
 // import VueAxios from 'vue-axios'
 // import notification from 'ant-design-vue/es/notification'
@@ -8,7 +9,7 @@ import axios from "axios";
 // 创建 axios 实例
 // axios.defaults.withCredentials=true;
 const service = axios.create({
-  baseURL: "http://59.230.230.39:3000/api", // https://wx.daxiang.gov.cn/api/ api base_url http://127.0.0.1:3001/api //http://api.dxzc.gov.cn:3000/api"
+  baseURL: "https://wx.daxiang.gov.cn/api/", // https://wx.daxiang.gov.cn/api/ api base_url http://127.0.0.1:3001/api //http://api.dxzc.gov.cn:3000/api"
   timeout: 5000 // 请求超时时间
 });
 
@@ -41,13 +42,16 @@ const service = axios.create({
 //   }, err)
 
 // response 拦截器
-axios.interceptors.response.use(function (response) {
-  // Do something with response data
-  return response;
-}, function (error) {
-  // Do something with response error
-  return Promise.reject(error);
-});
+axios.interceptors.response.use(
+  function(response) {
+    // Do something with response data
+    return response;
+  },
+  function(error) {
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
 //   service.interceptors.response.use((response) => {
 //    // console.log(response.data)
 //       return response.data

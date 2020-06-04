@@ -3,4 +3,4 @@ import checkLsinfo from "@/components/lsUser/check_ls_info";
 // import TreeList from '@/views/other/TreeList'
 // import AcUserLayout from '@/components/layouts/AcUserLayout'
 
-export  { checkLsinfo };
+export { checkLsinfo };

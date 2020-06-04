@@ -1,17 +1,18 @@
-const path = require('path')
+const path = require("path");
 //全局文件路径
 // const glob = require("glob-all");
 //用于生产环境去除多余的css
 // const PurgecssPlugin = require("purgecss-webpack-plugin");
 //压缩代码并去掉console
- const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 //代码打包zip
- const CompressionWebpackPlugin = require("compression-webpack-plugin");
- const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
 //
- const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-function resolve (dir) {
-  return path.join(__dirname, dir)
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+function resolve(dir) {
+  return path.join(__dirname, dir);
 }
 
 module.exports = {
@@ -19,8 +20,8 @@ module.exports = {
   // 默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 https://www.my-app.com/。
   // 如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在 https://www.my-app.com/my-app/，则设置 publicPath 为 /my-app/。
   // publicPath:process.env.NODE_ENV === "production" ? "./" : "/",
-  publicPath:process.env.NODE_ENV === "production" ? "./" : "/",
-    
+  publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
+
   // 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
   // 注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
   // 默认值'dist'
@@ -42,38 +43,38 @@ module.exports = {
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   productionSourceMap: false,
   //打包配置开始
-//  configureWebpack: config => {
-//   const plugins = [];
-//  // 启用代码压缩
-//   plugins.push(
-//     new TerserPlugin({
-//       terserOptions: {
-//         compress: {
-//           warnings: false,
-//           drop_console: true,
-//           drop_debugger: false,
-//           pure_funcs: ["console.log"] //移除console
-//         }
-//       },
-//       sourceMap: false,
-//       parallel: true
-//     })
-//   ),
-//    // 代码压缩打包
-//     // plugins.push(
-//     //   new CompressionWebpackPlugin({
-//     //     filename: "[path].gz[query]",
-//     //     algorithm: "gzip",
-//     //     test: productionGzipExtensions,
-//     //     threshold: 10240,
-//     //     minRatio: 0.8
-//     //   })
-//     // );
-//     plugins.push(
-//       new BundleAnalyzerPlugin()
-//     );
-//   config.plugins = [...config.plugins, ...plugins];
-// },
+  //  configureWebpack: config => {
+  //   const plugins = [];
+  //  // 启用代码压缩
+  //   plugins.push(
+  //     new TerserPlugin({
+  //       terserOptions: {
+  //         compress: {
+  //           warnings: false,
+  //           drop_console: true,
+  //           drop_debugger: false,
+  //           pure_funcs: ["console.log"] //移除console
+  //         }
+  //       },
+  //       sourceMap: false,
+  //       parallel: true
+  //     })
+  //   ),
+  //    // 代码压缩打包
+  //     // plugins.push(
+  //     //   new CompressionWebpackPlugin({
+  //     //     filename: "[path].gz[query]",
+  //     //     algorithm: "gzip",
+  //     //     test: productionGzipExtensions,
+  //     //     threshold: 10240,
+  //     //     minRatio: 0.8
+  //     //   })
+  //     // );
+  //     plugins.push(
+  //       new BundleAnalyzerPlugin()
+  //     );
+  //   config.plugins = [...config.plugins, ...plugins];
+  // },
   configureWebpack: {
     // performance: {
     //   hints:false
@@ -91,30 +92,29 @@ module.exports = {
     //     return assetFilename.endsWith('.js');
     //   }
     // }
-  },  
-  chainWebpack: (config) => {
+  },
+  chainWebpack: config => {
     config.resolve.alias
-      .set('@$', resolve('src'))
-      .set('@api', resolve('src/api'))
-      .set('@assets', resolve('src/assets'))
-      .set('@comp', resolve('src/components'))
-      .set('@views', resolve('src/views'))
-      .set('@layout', resolve('src/layout'))
-      .set('@static', resolve('src/static'))
+      .set("@$", resolve("src"))
+      .set("@api", resolve("src/api"))
+      .set("@assets", resolve("src/assets"))
+      .set("@comp", resolve("src/components"))
+      .set("@views", resolve("src/views"))
+      .set("@layout", resolve("src/layout"))
+      .set("@static", resolve("src/static"));
   },
   css: {
     loaderOptions: {
       less: {
         modifyVars: {
           /* less 变量覆盖，用于自定义 ant design 主题 */
-
           /*
           'primary-color': '#F5222D',
           'link-color': '#F5222D',
           'border-radius-base': '4px',
           */
         },
-        javascriptEnabled: true,
+        javascriptEnabled: true
       }
     }
   },

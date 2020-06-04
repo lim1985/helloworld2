@@ -7,14 +7,14 @@
 
 const user = {
   state: {
-    ReportId:"",
+    ReportId: "",
     // token: "",
     // name: "",
     // welcome: "",
     // avatar: "",
     // roles: [],
     // info: {},
-     userinfo: "",
+    userinfo: ""
     // userID: "",
     // DEPKEY: "",
     // UserPhoneID: "",
@@ -31,7 +31,7 @@ const user = {
     },
     SET_Userinfo: (state, userinfo) => {
       state.userinfo = userinfo;
-    },
+    }
     // SET_TOKEN: (state, token) => {
     //   state.token = token;
     // },
@@ -91,7 +91,6 @@ const user = {
     //           // console.log('服务器生成的token'+res.token)
     //           //console.log(res.)
     //           Vue.ls.set(ACCESS_TOKEN, res.token, 7 * 24 * 60 * 60 * 1000);
-
     //           console.log(`登陆后` + res.userinfo.AdminID);
     //           Vue.ls.set(User_ID, res.userinfo.AdminID);
     //           // commit('SET_USERID',res.userinfo.AdminID)
@@ -115,7 +114,6 @@ const user = {
     //       .then(response => {
     //         console.log(response);
     //         const result = response.result;
-
     //         // console.log(result)
     //         if (result.role && result.role.permissions.length > 0) {
     //           const role = result.role;
@@ -169,7 +167,6 @@ const user = {
     //           });
     //           commit("SET_AVATAR", result.result.RolesID.avatar);
     //           commit("SET_SENDSMS", result.result.RolesID.SendsmsList);
-
     //           // console.log(result.result.RolesID.SendsmsList)
     //           resolve(response);
     //           console.log("89898989");
@@ -201,7 +198,6 @@ const user = {
     //           //   if(!result.result.SendsmsList || result.result.SendSmsList===undefined)
     //           // {
     //           console.log(result.result.SendsmsList);
-
     //           if (result.result.SendsmsList.length > 0) {
     //             //权限内勾选了可发短信选项
     //             console.log("勾选了发短息权限");
@@ -216,7 +212,6 @@ const user = {
     //             //没有发短信权限
     //             console.log("没有发短息权限");
     //           }
-
     //           console.log(result.result.role);
     //           console.log(`1-1-1-1-1-1-1-1-`);
     //           console.log(role.permissionList);

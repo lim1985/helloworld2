@@ -4,103 +4,111 @@ const api = {
   checkCaptcha: "/checkCaptcha",
   reportadd: "/reportadd",
   CheckTel: "/CheckTel",
-  getUserInfo:"/getUserInfo",
-  reportupdate:"/reportupdate",
-  checkAdmin:"/checkAdmin",
-  auditlog:"/auditlog",
-  addRecords:"/addRecords",//手工添加纪录/并带有操作历史记录
-  checkCaptchatoken:"/checkCaptchatoken",
-  GetVerificatCodeAdSmssecret:"/GetVerificatCodeAdSmssecret",
+  getUserInfo: "/getUserInfo",
+  reportupdate: "/reportupdate",
+  checkAdmin: "/checkAdmin",
+  auditlog: "/auditlog",
+  addRecords: "/addRecords", //手工添加纪录/并带有操作历史记录
+  checkCaptchatoken: "/checkCaptchatoken",
+  GetVerificatCodeAdSmssecret: "/GetVerificatCodeAdSmssecret",
   //大祥融媒数据统计
-  getAllsharelink:'/getAllsharelink',
+  getAllsharelink: "/getAllsharelink",
   //卡口管理
-  kakoAdd:"/kakoAdd",
-  kakoselect:"/kakoselect",
-  AllKakoandCounts:"/AllKakoandCounts",
+  kakoAdd: "/kakoAdd",
+  kakoselect: "/kakoselect",
+  AllKakoandCounts: "/AllKakoandCounts",
   //统计数据
-  getDataCounts:'/getDataCounts',
-  getAllDataGroupbyJDID:'/getAllDataGroupbyJDID',
-   //统计访问量
-  QMCount:'/count',
-   //大祥融媒安装邀请记录
-   //模糊查询单位名称
-  getdeplist:'/getDeplist', //like 查询部门
-  finduserByTel:'/finduserByTel',//查询存在的记录
-  isDXRM:'/DXRMUserinfo',//查询是否提交数据
-  adddxrm:'/adddxrm',//插入登记人员记录
-  seletDepCount:'/seletDepCount',
+  getDataCounts: "/getDataCounts",
+  getAllDataGroupbyJDID: "/getAllDataGroupbyJDID",
+  //统计访问量
+  QMCount: "/count",
+  //大祥融媒安装邀请记录
+  //模糊查询单位名称
+  getdeplist: "/getDeplist", //like 查询部门
+  finduserByTel: "/finduserByTel", //查询存在的记录
+  isDXRM: "/DXRMUserinfo", //查询是否提交数据
+  adddxrm: "/adddxrm", //插入登记人员记录
+  seletDepCount: "/seletDepCount",
   //获取最新的ID
-  getTopId:'https://wx.daxiang.gov.cn/dxzc/getTopID',//'http://59.230.230.39:3002/api/getTopID', https://wx.daxiang.gov.cn/dxzc/getTopID
+  getTopId: "https://wx.daxiang.gov.cn/dxzc/getTopID", //'http://59.230.230.39:3002/api/getTopID', https://wx.daxiang.gov.cn/dxzc/getTopID
   //获取部门对应工作动态节点ID
-  GetNodeID:'https://wx.daxiang.gov.cn/dxzc/getnodeid',//'http://59.230.230.39:3002/api/getnodeid', 
+  GetNodeID: "https://wx.daxiang.gov.cn/dxzc/getnodeid", //'http://59.230.230.39:3002/api/getnodeid',
   //上传文件
-  uploads:'https://wx.daxiang.gov.cn/dxzc/uploads',//'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads'
-  singlelupload:'https://wx.daxiang.gov.cn/dxzc/singlelupload',//'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
-  singleImageUpload:'https://wx.daxiang.gov.cn/dxzc/singleImageUpload',//'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
-  AddnewsByApp:'https://wx.daxiang.gov.cn/dxzc/AddnewsByApp'//'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
+  uploads: "https://wx.daxiang.gov.cn/dxzc/uploads", //'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads'
+  singlelupload: "https://wx.daxiang.gov.cn/dxzc/singlelupload", //'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
+  singleImageUpload: "https://wx.daxiang.gov.cn/dxzc/singleImageUpload", //'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload https://wx.daxiang.gov.cn/dxzc/singleImageUpload
+  AddnewsByApp: "https://wx.daxiang.gov.cn/dxzc/AddnewsByApp", //'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
+  GetArticleList: "https://wx.daxiang.gov.cn/dxzc/GetArticleList" //'http://59.230.230.39:3002/api/uploads' https://wx.daxiang.gov.cn/dxzc/uploads' singlelupload
 
   
+
   //'http://172.20.8.28:3002/dxzc/singleImageUpload'
 };
 
 export default api;
+//获取部门对应工作动态节点ID
+export function GetArticleList(parameter) {
+  return axios({
+    url: api.GetArticleList,
+    method: "get",
+    params: parameter
+  });
+}
 //插入上传图片后生成的数据到后台
 export function AddnewsByApp(parameter) {
   return axios({
     url: api.AddnewsByApp,
-    method: 'post',
-    data:parameter,   
-   
-  })
+    method: "post",
+    data: parameter
+  });
 }
 //获取部门对应工作动态节点ID
 export function GetNodeID(parameter) {
   return axios({
     url: api.GetNodeID,
     method: "get",
-    params: parameter,   
+    params: parameter
   });
 }
 //单个上传图片到系统
 export function singleImageUpload(parameter) {
   return axios({
     url: api.singleImageUpload,
-    method: 'post',
-    data:parameter,   
+    method: "post",
+    data: parameter,
     headers: {
-    'Content-Type': 'multipart/form-data'
-    },
-  })
+      "Content-Type": "multipart/form-data"
+    }
+  });
 }
 //单个上传图片到系统
 export function singlelupload(parameter) {
   return axios({
     url: api.singlelupload,
-    method: 'post',
-    data:parameter,   
+    method: "post",
+    data: parameter,
     headers: {
-    'Content-Type': 'multipart/form-data'
-    },
-  })
+      "Content-Type": "multipart/form-data"
+    }
+  });
 }
 //上传图片到系统
 export function uploads(parameter) {
   return axios({
     url: api.uploads,
-    method: 'post',
-    data:parameter,   
+    method: "post",
+    data: parameter,
     headers: {
-    'Content-Type': 'multipart/form-data'
-    },
-  })
+      "Content-Type": "multipart/form-data"
+    }
+  });
 }
 //大祥融媒体发稿数据查询
 export function getTopId(parameter) {
   return axios({
     url: api.getTopId,
     method: "get",
-    params: parameter,
-   
+    params: parameter
   });
 }
 //大祥融媒体发稿数据查询
@@ -126,7 +134,7 @@ export function adddxrm(parameter) {
   return axios({
     url: api.adddxrm,
     method: "post",
-    data: parameter    
+    data: parameter
   });
 }
 //模糊查询部门名称
@@ -194,7 +202,7 @@ export function addRecords(parameter) {
   return axios({
     url: api.addRecords,
     method: "post",
-    data: parameter    
+    data: parameter
   });
 }
 //get卡点
@@ -202,8 +210,7 @@ export function kakoselect(parameter) {
   return axios({
     url: api.kakoselect,
     method: "post",
-    data: parameter,
-    
+    data: parameter
   });
 }
 //添加卡口
