@@ -46,10 +46,10 @@
         </van-field>
       </van-panel>
     </div>
-     <van-row class="nowfooter">
+    <van-row class="nowfooter">
       <van-col span="24">
-        <div >
-         湖南泛深智能科技有限公司技术支持
+        <div>
+          湖南泛深智能科技有限公司技术支持
         </div>
       </van-col>
     </van-row>
@@ -80,7 +80,8 @@ import {
   getUserInfo,
   GetVerificatCodeAdSmssecret,
   checkCaptchatoken,
-  GetNodeID
+  GetNodeID,
+  GetUserRolesbytel
 
   // CheckTel
 } from "@/api/index";
@@ -379,11 +380,10 @@ export default {
       this.$toast.fail(errorInfo.errors[0].message);
     },
 
-    async getUser(
-      tel //判断是不是系统里的人
-    ) {
+    async getUser(tel) {
       let userinfomation = await finduserByTel({ cellphone: tel });
-
+      let userRoles=await GetUserRolesbytel({tel:tel})
+      console.log(userRoles)
       console.log(userinfomation);
       if (userinfomation.data.code == 1) {
         this.form.UserName = userinfomation.data.userinfo.UserName;
@@ -392,6 +392,7 @@ export default {
         this.form.DepName = userinfomation.data.userinfo.DepartmentName;
         this.form.DepID = userinfomation.data.userinfo.DepartmentId;
         this.form.status = 1;
+        this.form.Roles= userRoles.data.code==100?userRoles.data.body:[]
         Vue.ls.set(UserInfo, this.form); //设置本地缓存
         this.$store.commit("SET_Userinfo", this.form);
         console.log(this.form);
@@ -407,7 +408,7 @@ export default {
       let _nodeid = nodeID.data.code == -1 ? 1076 : nodeID.data.result.NodeID;
 
       Vue.ls.set(NodeID, _nodeid);
-      this.$router.push({ name: "Uflist" });
+      this.$router.push({ name: "index" });
       // return nodeID.data.result.NodeID
     },
     async auth() {
@@ -593,7 +594,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .text_dialog {
   font-size: 16px;
   padding-bottom: 10px;
@@ -695,14 +695,13 @@ export default {
   color: #fff;
 }
 .nowfooter {
- 
-    position:absolute;
-    color:#000;
-    bottom:5;
-    width:100%;
-    height:100px;    
-    text-align:center;
-    background-color: #f7f7f7;
+  position: absolute;
+  color: #000;
+  bottom: 5;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  background-color: #f7f7f7;
 }
 .title_5 {
   font-size: 17px;

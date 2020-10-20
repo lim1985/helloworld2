@@ -12,10 +12,21 @@ import VueClipboard from "vue-clipboard2";
 import { UserInfo, NodeID } from "@/store/mutation-types";
 
 // 全局注册
+// import { Tag } from 'vant';
+// import { Swipe, SwipeItem } from 'vant';
+
+// Vue.use(Swipe);
+// Vue.use(SwipeItem);
+// import { Tabbar, TabbarItem } from 'vant';
+
 
 import {
+  SwipeCell,
+  Search,
+  Tag,
+  DropdownMenu, DropdownItem,
   ImagePreview,
-  ActionSheet ,
+  ActionSheet,
   List,
   Uploader,
   Calendar,
@@ -49,16 +60,18 @@ import {
   NoticeBar,
   Collapse,
   CollapseItem,
-  Loading
+  Loading,
+  Card
 } from "vant";
 
+import "./assets/iconfont/iconfont.css";
 import "vant/lib/index.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import moment from "moment";
 import config from "@/defaultConfig";
 router.beforeEach((to, form, next) => {
-  const nextRoute = ["Uflist", "UfAdd"];//需要验证的页面
+  const nextRoute = ["Uflist", "UfAdd", "index"]; //需要验证的页面
   let node = Vue.ls.get(NodeID) || false;
   let _UserInfo = Vue.ls.get(UserInfo) || false;
 
@@ -68,7 +81,7 @@ router.beforeEach((to, form, next) => {
       return;
     }
     console.log(`到这里了`);
-    next({ name: "Uflist" });
+    next({ name: "index" });
     return;
   }
   if (nextRoute.indexOf(to.name) >= 0) {
@@ -127,12 +140,21 @@ router.beforeEach((to, form, next) => {
 //   next();
 // })
 
+
+Vue.prototype.$axios = axios;
 Vue.prototype.$moment = moment; //赋值使用
 Vue.prototype.$md5 = md5; //MD5
 Vue.prototype.$store = store; //MD5
 Vue.use(Lazyload, {
   lazyComponent: true
 });
+
+Vue.use(SwipeCell);
+Vue.use(Card);
+Vue.use(Search);
+Vue.use(Tag);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
 Vue.use(ImagePreview);
 Vue.use(ActionSheet);
 Vue.use(List);
@@ -180,7 +202,7 @@ Vue.use(Uploader);
 new Vue({
   router,
   store,
-  mounted() {
+  mounted () {
     let _UserInfo = Vue.ls.get(UserInfo);
     store.commit("SET_Userinfo", _UserInfo);
   },

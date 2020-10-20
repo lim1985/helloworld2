@@ -1,176 +1,65 @@
 <template>
   <!-- <div v-if="isRealUrl" class="hello"> -->
   <!-- <img alt="Vue logo" width="100%" src="../assets/bg.jpg"> -->
-
+     <!-- <van-notice-bar text="温馨提醒:大祥区雨溪公墓实行按日分时段限流预约祭扫，可通过“云上清明”微信公众号或拨打电话0739-5300667预约或咨询。3月28日至４月12日，每个墓穴每天入园祭扫人员不超过３人，祭扫时间不超过１小时，未预约不得入园祭扫。" left-icon="volume-o" />
+     -->
+          <!-- {{fullWidth}}{{UA}}- -->
   <div>
     <div class="header">
-      <van-row>
-        <van-col style="text-align: left;line-height: 40px;padding-left: 10px;" span="20">
-          <!-- <van-notice-bar text="温馨提醒:大祥区雨溪公墓实行按日分时段限流预约祭扫，可通过“云上清明”微信公众号或拨打电话0739-5300667预约或咨询。3月28日至４月12日，每个墓穴每天入园祭扫人员不超过３人，祭扫时间不超过１小时，未预约不得入园祭扫。" left-icon="volume-o" />
-          -->
-          <!-- {{fullWidth}}{{UA}}- -->
-          <span>
-            发稿单位：{{ Userinfo.Abbreviation }}-{{
-            Userinfo.UserName
-            }},你好
-          </span>
+       <van-row>
+        <van-col span="2">
+        <van-nav-bar left-arrow @click-left="goback(-1)" />
+        </van-col>
+         <van-col offset="14" span="8"  style="text-align: left;line-height: 45px;padding-left: 10px;font-size:16px;">
+        <span>
+          <!-- 发稿单位：{{ Userinfo.Abbreviation }}- -->
+           你好, {{
+              Userinfo.UserName
+            }}</span
+          >
+        </van-col>
+        
+       </van-row>
+      <!-- <van-row>
+        <van-col
+          style="text-align: left;line-height: 40px;padding-left: 10px;"
+          span="20"
+        >
+     
+          <span
+            >发稿单位：{{ Userinfo.Abbreviation }}-{{
+              Userinfo.UserName
+            }},你好</span
+          >
         </van-col>
         <van-col style="margin: 0px 15px 0px 0px;float: right;">
-          <!-- <van-notice-bar text="温馨提醒:大祥区雨溪公墓实行按日分时段限流预约祭扫，可通过“云上清明”微信公众号或拨打电话0739-5300667预约或咨询。3月28日至４月12日，每个墓穴每天入园祭扫人员不超过３人，祭扫时间不超过１小时，未预约不得入园祭扫。" left-icon="volume-o" />
-          -->
-          <!-- <span @click="quit()"><van-icon name="setting-o" /> </span> -->
-          <van-dropdown-menu>
-            <van-dropdown-item title="操作" ref="droplist">
-              <van-button block @click="goback()">返回首页</van-button>
-              <van-divider />
-              <van-button block type="info" @click="quit()">退出登录</van-button>
-            </van-dropdown-item>
-          </van-dropdown-menu>
-          <!-- <van-dropdown-item title="筛选" ref="droplist">
+   
+      <van-dropdown-menu> 
+        <van-dropdown-item  title="操作" ref="droplist">
+          <van-button block  @click="goback()">返回首页</van-button>
+          <van-divider />
+          <van-button block type="info" @click="quit()">退出登录</van-button>
+        </van-dropdown-item>
+       </van-dropdown-menu> 
+          </van-col>
+      </van-row> -->
+    </div>
+    <sortContent></sortContent>
+   <!-- <van-dropdown-item title="筛选" ref="droplist">
   <span @click="quit()"><van-icon name="setting-o" /> </span> 
-          </van-dropdown-item>-->
-          <!-- <van-dropdown-item v-model="selectList" ref="droplist" :options="option1"> -->
-          <!-- <span @click="quit()"><van-icon name="setting-o" /> </span> -->
-          <!-- <van-switch-cell v-model="switch1" title="包邮" />
-          <van-switch-cell v-model="switch2" title="团购" />-->
-          <!-- <van-button block type="info" @click="quit">退出登录</van-button> -->
-          <!-- </van-dropdown-item> -->
-          <!-- </van-dropdown-menu> -->
-        </van-col>
-      </van-row>
-    </div>
-    <div v-show="listPanl">
-      <div>
-        <van-row>
-          <van-col span="8" style="text-align: left;margin-left: 6px;">
-            <van-button size="normal" @click="ToAdd" type="primary">在线上稿</van-button>
-          </van-col>
-        </van-row>
-      </div>
-      <div class="list_bg">
-        <van-row>
-          <van-col span="8">
-            <div class="title">
-              <h1>稿件列表</h1>
-            </div>
-          </van-col>
-          <van-col v-if="active==0 || active==1 && hasRoles" offset="12" span="4">
-            <div @click="goSort()" class="title_right">
-              <van-icon name="ellipsis" />
-            </div>
-          </van-col>
-        </van-row>
-        <van-row>
-          <van-col span="24">
-            <van-tabs v-model="active" @change="changeTabs()">
-              <van-tab title="待审稿件">
-                <van-list
-                  v-model="dsloading"
-                  :finished="dsfinished"
-                  finished-text="没有更多数据了"
-                  @load="dsonLoad"
-                >
-                  <van-row
-                    class="aListClass"
-                    v-for="(item, index) in dsaList"
-                    :key="index"
-                    :title="item.title"
-                  >
-                    <van-row>
-                      <van-col style="padding:5px 0px" span="24">
-                        <van-cell style="padding-left:10px;fontsize:18px;">
-                          {{
-                          item.title
-                          }}
-                        </van-cell>
-                      </van-col>
-                    </van-row>
-                    <van-row @click="onclickimglist(index)">
-                      <van-col style="padding:5px 0px;text-align: left;" span="24">
-                        <img
-                          :width="imgwidth"
-                          :height="imgwidth"
-                          style="padding:1px 2px;"
-                          v-for="(item, imageindex) in item.ImageFiles"
-                          :key="imageindex"
-                          :src="item.localhost +'/'+item.real_file"
-                        />
-                      </van-col>
-                    </van-row>
-                    <van-row>
-                      <van-col
-                        style="padding:5px 0px;text-align: left;"
-                        span="9"
-                      >第一作者：{{ item.TitleIntact }}</van-col>
-                      <van-col
-                        style="padding:5px 0px;text-align: left;"
-                        offset="1"
-                        span="11"
-                      >时间：{{ item.InputTime }}</van-col>
-                      <van-col style="padding:5px 0px;text-align: left;" offset="1" span="2">
-                        <span style="color:#409EFF">编辑</span>
-                      </van-col>
-                    </van-row>
-                    <van-divider />
-                  </van-row>
-                </van-list>
-              </van-tab>
-              <van-tab title="已审稿件">
-                <van-list
-                  v-model="ysloading"
-                  :finished="ysfinished"
-                  finished-text="没有更多数据了"
-                  @load="ysonLoad"
-                >
-                  <van-row
-                    class="aListClass"
-                    v-for="(item, index) in ysaList"
-                    :key="index"
-                    :title="item.title"
-                  >
-                    <van-row>
-                      <van-col style="padding:5px 0px" span="24">
-                        <van-cell style="padding-left:10px;fontsize:18px;">{{ item.title }}</van-cell>
-                      </van-col>
-                    </van-row>
-                    <van-row>
-                      <van-col style="padding:5px 0px;text-align: left;" span="24">
-                        <img
-                          :width="imgwidth"
-                          :height="imgwidth"
-                          style="padding:1px 2px;"
-                          v-for="(item, imageindex) in item.ImageFiles"
-                          :key="imageindex"
-                          :src="item.localhost + item.real_file"
-                        />
-                      </van-col>
-                    </van-row>
-                    <van-row>
-                      <van-col
-                        style="padding:5px 0px;text-align: left;"
-                        span="9"
-                      >第一作者：{{ item.TitleIntact }}</van-col>
-                      <van-col
-                        style="padding:5px 0px;text-align: left;"
-                        offset="1"
-                        span="11"
-                      >时间：{{ item.InputTime }}</van-col>
-                      <van-col style="padding:5px 0px;text-align: left;" offset="1" span="2">
-                        <span style="color:#409EFF">编辑</span>
-                      </van-col>
-                    </van-row>
-                    <van-divider />
-                  </van-row>
-                </van-list>
-              </van-tab>
-              <!-- <van-tab title="退稿">退稿</van-tab> -->
-            </van-tabs>
-          </van-col>
-        </van-row>
-      </div>
-    </div>
-    <van-image-preview
-      class="my-preView"
+  </van-dropdown-item> -->
+  <!-- <van-dropdown-item v-model="selectList" ref="droplist" :options="option1"> -->
+      <!-- <span @click="quit()"><van-icon name="setting-o" /> </span> -->
+    <!-- <van-switch-cell v-model="switch1" title="包邮" />
+    <van-switch-cell v-model="switch2" title="团购" /> -->
+    <!-- <van-button block type="info" @click="quit">退出登录</van-button> -->
+  <!-- </van-dropdown-item> -->
+<!-- </van-dropdown-menu> -->
+        
+     
+ 
+    <!-- <van-image-preview
+      className="my-preView"
       v-model="showimglist"
       :images="imageslist"
       @close="onCloseImglist"
@@ -178,12 +67,10 @@
     >
       <template v-slot:index>共{{ imageIndex }}页</template>
 
-      <template style="top:600px !important;" v-slot:cover>
-        {{
+      <template style="top:600px !important;" v-slot:cover>{{
         imagescoverText
-        }}
-      </template>
-    </van-image-preview>
+      }}</template>
+    </van-image-preview> -->
   </div>
 
   <!-- </div> -->
@@ -193,8 +80,8 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { Tel, ReportId, UserInfo, NodeID } from "@/store/mutation-types"; //MD5Tel AdminInfo
-//  import eruda from 'eruda'
-// IsAdmin ,Version,AdminInfo,
+import sortContent from '@/components/Index/sortContent/'
+// import eruda from 'eruda' IsAdmin ,Version,AdminInfo,
 import {
   seletDepCount,
   adddxrm,
@@ -212,13 +99,17 @@ import _ from "lodash";
 //  var moment = require('moment');
 export default {
   name: "HelloWorld",
+   components: {
+    sortContent
+    // navigations
+  },
   computed: {
     ...mapState({
       Userinfo: state => state.user.userinfo
     })
   },
   watch: {
-    DepCount (val) {
+    DepCount(val) {
       setTimeout(() => {
         this.DepCount = val;
       }, 500);
@@ -227,7 +118,7 @@ export default {
   props: {
     msg: String
   },
-  created () {
+  created() {
     console.log(window.document.referrer);
     console.log(this.$route);
     console.log(`created`);
@@ -236,20 +127,19 @@ export default {
     this.initImagesWH();
     //  this.auth();
   },
-  mounted () {
+  mounted() {
 
     // this.hasRoles=JSON.stringify(Vue.ls.get(UserInfo.Roles.roles)).indexOf("0")==-1?true:false
     // console.log(this.hasRoles)
     //  console.log( this.checkroles());
-    this.hasRoles = this.checkroles()
-    console.log(this.checkroles())
+     this.hasRoles=this.checkroles()
     // console.log(JSON.stringify(Vue.ls.get(UserInfo).Roles.roles).indexOf("0"))
     // console.log(this.hasRoles)
     // this.changeTabs();
     // this.isFormUrl()
     // let a=this.check_useragent()
     // console.log(a)
-    //  eruda.init()
+    // eruda.init()
     // let ismobile=this.isMobile()
     // if(!ismobile)
     // {
@@ -262,7 +152,7 @@ export default {
     // console.log(ismobile)
   },
 
-  data () {
+  data() {
     // let NowInputTimes=moment().format('YYYY-MM-DD HH:mm:ss')
     //  this.UA=function(){
     //      let flag = navigator.userAgent.match(
@@ -271,10 +161,10 @@ export default {
     //     return flag
     //   };
     return {
-      ishied: false,
-      selectList: 0,
-      hasRoles: false,
-      allowRoles: [0, 126],
+      ishied:false,
+      selectList:0,
+      hasRoles:false,
+      allowRoles:["0","126"],
       imageIndex: 0,
       imagescoverText: "",
       imageslist: [],
@@ -338,40 +228,43 @@ export default {
       ysnextPage: 0,
       dssingleLoaded: 0,
       yssingleLoaded: 0,
-      yscount: 0,
-      ysparameter: { pageNo: 1, pageSize: 6 },
-      dsparameter: { pageNo: 1, pageSize: 6 }
+      yscount:0,
+      ysparameter:{pageNo:1,pageSize:2},
+       dsparameter:{pageNo:1,pageSize:2}
       // personTitle:''
     };
   },
   methods: {
-    checkroles () {
-      let _roles = Vue.ls.get(UserInfo).Roles
+    checkroles()
+    {
+      let _roles=Vue.ls.get(UserInfo).Roles
       console.log(_roles)
-      if (_roles.length == 0) {
+      if(_roles.length==0)
+      {
         return false
       }
-
-      for (let x = 0; x < this.allowRoles.length; x++) {
-        if (JSON.stringify(_roles.roles).indexOf(this.allowRoles[x]) >= 1) {
-          return true
+       
+      for(let x=0;x<=this.allowRoles.length;x++)
+      {
+        if(JSON.stringify(_roles.roles).indexOf(this.allowRoles[x])>=1)
+        {
+            return true
         }
+        return false
       }
-      return false
     },
-    goSort () {
-      this.$router.push(
-        { name: 'sortContent', params: { status: this.active == 0 ? 2 : 99 } }
-      )
+    alert()
+    {
+      console.log(`9999`)
     },
-    onCloseImglist (index) {
+    onCloseImglist(index) {
       console.log(index);
       this.imageslist = [];
       this.imagescover = [];
       this.imageIndex = 0;
       //  this.imagescover=this.imagescover[index]
     },
-    onclickimglist (index) {
+    onclickimglist(index) {
       this.dsaList[index].ImageFiles.map(item => {
         this.imageIndex++;
         // let imgobj=new Object();
@@ -387,15 +280,15 @@ export default {
       this.showimglist = true;
       this.imagescoverText = this.imagescover[0];
     },
-    onclickImg (index) {
+    onclickImg(index) {
       this.imagescoverText = this.imagescover[index];
     },
-    initImagesWH () {
+    initImagesWH() {
       let fullwidth = document.documentElement.clientWidth;
       //  console.log(fullwidth)
       this.imgwidth = (fullwidth - 29) / 4;
     },
-    GetUA () {
+    GetUA() {
       let flag = navigator.userAgent.match(
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
       );
@@ -403,120 +296,134 @@ export default {
       this.UA = !flag ? "PC" : flag;
       // console.log(this.UA)
     },
-    goback () {
-      //  window.history.go(-1);
-      this.$router.push({ name: 'index' })
-    },
-    quit () {
+ goback(back){
+    //  window.history.go(-1);
+    if(back==-1)
+    {
+      window.history.go(back);
+    }
+    else    
+    {
+      this.$router.push({name:'index'})
+    }
+  },
+    quit() {
       // this.ishied=true
       // this.$refs.droplist.toggle()
       Vue.ls.set(UserInfo, "");
       Vue.ls.set(NodeID, "");
       this.$router.push({ path: "/Uniformlogin" });
     },
-    splitPage (array, size) {
+    splitPage(array, size) {
       var index = 0;
       size = size || 3;
 
       array = array.slice();
 
-      return function () {
+      return function() {
         var ret = array.slice(index, index + size);
         index += size;
         return ret;
       };
     },
 
-    async dsonLoad () {
-      console.log(`待审核开始读数`)
-      let userinfo = Vue.ls.get(UserInfo);
-      let node = Vue.ls.get(NodeID);
-      let _alist = [];
-
+ async dsonLoad() {
+      console.log(`待审核开始读数`)    
+       let userinfo = Vue.ls.get(UserInfo);
+       let node = Vue.ls.get(NodeID);
+       let _alist = [];  
+       
       if (!userinfo || !node) {
         return;
       }
-      let articlelist = await GetArticleList(Object.assign(this.dsparameter, {
-        Status: 1,
-        ClientType: 1,
-        NodeID: node
-      }));
-      let data = articlelist.data
-      console.log(data)
-      let list = data.result.rows
-      for (let i = 0; i < list.length; i++) {
-        let obj = new Object();
-        obj.title = list[i].Title;
-        obj.TitleIntact = list[i].A.TitleIntact || '未定义';
-        obj.GeneralID = list[i].GeneralID;
-        obj.InputTime = this.$moment(list[i].InputTime).format("MM-DD HH:ss");
-        obj.ImageFiles = list[i].Files;
-        _alist.push(obj);
-      }
-
-      if (this.dsaList.length !== data.totalCount) {
-        this.dsparameter.pageNo = this.dsparameter.pageNo + 1
-        this.dsloading = false
-      }
-      else {
-        this.dsloading = true
-      }
-
-      // c=a.concat(b);
-      this.dsaList = this.dsaList.concat(_alist)
-      if (this.dsaList.length >= data.totalCount) {
-        this.dsfinished = true;
-      }
-    },
-
-    async ysonLoad () {
+      let articlelist = await GetArticleList(Object.assign(this.dsparameter,{
+            Status: 1,
+            ClientType: 1,
+            NodeID: node
+        }));        
+        let data=articlelist.data   
+        console.log(data)        
+        let list = data.result.rows
+        for (let i = 0; i < list.length; i++)
+        {
+          let obj = new Object();
+          obj.title = list[i].Title;
+          obj.TitleIntact = list[i].A.TitleIntact||'未定义';
+          obj.GeneralID = list[i].GeneralID;
+          obj.InputTime = this.$moment(list[i].InputTime).format("MM-DD HH:ss");
+          obj.ImageFiles = list[i].Files;
+          _alist.push(obj);
+        }  
+        setTimeout(() => {
+        if(this.dsaList.length !==data.totalCount)
+        {
+          this.dsparameter.pageNo= this.dsparameter.pageNo+1
+          this.dsloading=false
+        }
+        else
+        {
+          this.dsloading=true
+        }
+        }, 500);
+          // c=a.concat(b);
+            this.dsaList =this.dsaList.concat(_alist)
+        if (this.dsaList.length >= data.totalCount) {
+          this.dsfinished= true;
+        }
+       },
+  
+   async ysonLoad() 
+   {
       console.log(`开始读数`)
-
-      let userinfo = Vue.ls.get(UserInfo);
-      let node = Vue.ls.get(NodeID);
-      let _alist = [];
-
+    
+       let userinfo = Vue.ls.get(UserInfo);
+       let node = Vue.ls.get(NodeID);
+       let _alist = [];  
+     
       if (!userinfo || !node) {
         return;
       }
-      let articlelist = await GetArticleList(Object.assign(this.ysparameter, {
-        Status: 99,
-        ClientType: 1,
-        NodeID: node
-      }));
-
-      let data = articlelist.data
-      console.log(data)
-      let list = data.result.rows
-      for (let i = 0; i < list.length; i++) {
-        let obj = new Object();
-        obj.title = list[i].Title;
-        obj.TitleIntact = list[i].A.TitleIntact || '未定义';
-        obj.GeneralID = list[i].GeneralID;
-        obj.InputTime = this.$moment(list[i].InputTime).format("MM-DD HH:ss");
-        obj.ImageFiles = list[i].Files;
-        _alist.push(obj);
-      }
-
-      if (this.ysaList.length !== data.totalCount) {
-        this.ysparameter.pageNo = this.ysparameter.pageNo + 1
-        this.ysloading = false
-      }
-      else {
-        this.ysloading = true
-      }
-
-
-
-      this.ysaList = this.ysaList.concat(_alist)
-      if (this.ysaList.length >= data.totalCount) {
-        this.ysfinished = true;
-      }
-    },
-    changeTabs () {
+      let articlelist = await GetArticleList(Object.assign(this.ysparameter,{
+            Status: 99,
+            ClientType: 1,
+            NodeID: node
+        }));
+        
+        let data=articlelist.data   
+        console.log(data)        
+        let list = data.result.rows
+        for (let i = 0; i < list.length; i++)
+        {
+          let obj = new Object();
+          obj.title = list[i].Title;
+          obj.TitleIntact = list[i].A.TitleIntact||'未定义';
+          obj.GeneralID = list[i].GeneralID;
+          obj.InputTime = this.$moment(list[i].InputTime).format("MM-DD HH:ss");
+          obj.ImageFiles = list[i].Files;
+          _alist.push(obj);
+        }
+        setTimeout(() => {
+              if(this.ysaList.length !==data.totalCount)
+        {
+          this.ysparameter.pageNo= this.ysparameter.pageNo+1
+          this.ysloading=false
+        }
+        else
+        {
+          this.ysloading=true
+        }
+        }, 500);
+      
+          
+          this.ysaList =this.ysaList.concat(_alist)
+        if (this.ysaList.length >= data.totalCount) {
+          this.ysfinished= true;
+        }
+       },
+    changeTabs() {
       console.log(this.active);
-      this.ysparameter = { pageNo: 1, pageSize: 6 },
-        this.dsparameter = { pageNo: 1, pageSize: 6 }
+      this.ysparameter={pageNo:1,pageSize:6},
+      this.dsparameter={pageNo:1,pageSize:6}
       this.yssingleLoaded = false;
       this.dssingleLoaded = false;
       this.ysloading = true;
@@ -536,48 +443,50 @@ export default {
       this.ysonLoad();
       // this.GetArticleLists(this.active)
     },
-    ToAdd () {
+    ToAdd() {
       let vm = this;
       vm.$router.push({ name: "UfAdd" });
     },
 
-    isMobile () {
+    isMobile() {
       //获取到userAgent 使用正则表达式解析 若是移动端返回的flag将不为null，反之为null
-
+      console.log(navigator);
       if (window.document.referrer === "") {
         // 当没有上一级url链接的时候，返回上一级按钮的链接改成项目首页url链接地址，这也是很符合项目逻辑的
 
-
+        console.log(`没有上一级`);
       } else {
-        console.log(window.history.length);
+        console.log(this.$route);
+        console.log(window.document.referrer);
+        console.log(`有上一级`);
       }
-
+      console.log(window.history.length);
       let flag = navigator.userAgent.match(
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
       );
       return flag != null;
     },
-    showintroduce () {
-
+    showintroduce() {
+      console.log(this.arrow);
 
       this.arrow = this.arrow == "down" ? "up" : "down";
       this.showdialog = true;
     },
-    showPM () {
+    showPM() {
       console.log(this.arrow);
 
       this.arrow = this.arrow == "down" ? "up" : "down";
       this.$toast("排行榜即将开放");
       // this.arrow=this.arrow=='down'?'up'
     },
-    onConfirm (val) {
+    onConfirm(val) {
       console.log(val);
       this.form.DepName = val.text;
       this.form.DepID = val.code;
       console.log(this.form);
       this.showPicker = false;
     },
-    asyncGetdeplist: _.debounce(async function (val) {
+    asyncGetdeplist: _.debounce(async function(val) {
       console.log(val);
       if (val == "") {
         this.Deplist = [];
@@ -598,7 +507,7 @@ export default {
       }
     }, 800),
     //  500),
-    async onSubmit (values) {
+    async onSubmit(values) {
       console.log("submit", values);
       console.log(this.form);
       let vm = this;
@@ -635,11 +544,11 @@ export default {
 
     // 异步校验函数返回 Promise
 
-    onFailed (errorInfo) {
+    onFailed(errorInfo) {
       this.$toast.fail(errorInfo.errors[0].message);
     },
 
-    async GetArticleLists (active) {
+    async GetArticleLists(active) {
       console.log(active);
       // this.loading=true;
       let userinfo = Vue.ls.get(UserInfo);
@@ -730,7 +639,7 @@ export default {
       }
     },
 
-    getUserInfo () {
+    getUserInfo() {
       let id;
       let tel;
 
@@ -768,10 +677,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.title_right {
-  margin: 12px 0px 0px 0px;
+.van-nav-bar >>> .van-icon
+{
+  font-size: 30px;
+  color: #2b2b2b;
 }
-.van-dropdown-menu {
+.title_right{
+      margin: 12px 0px 0px 0px;
+}
+.van-dropdown-menu{
   height: 40px;
 }
 .van-divider {

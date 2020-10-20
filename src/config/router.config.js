@@ -5,7 +5,7 @@ export const constantRouterMap = [
     path: "/",
     redirect: "/Uniformlogin",
     hidden: true,
-    component: RouteView,
+    component: QMSMView,
     children: [
       {
         path: "/report",
@@ -134,5 +134,66 @@ export const constantRouterMap = [
 
     // hidden: true,
     component: () => import("@/views/uninform/add")
-  }
+  },
+  {
+    path: "/Uniformaddfile",
+    name: "UfAddfile",
+    // hidden: true,
+    component: () => import("@/views/uninform/addfile")
+  },
+  {
+    path: "/Uniformfileslist",
+    name: "UffilesList",
+
+    // hidden: true,
+    component: () => import("@/views/uninform/fileslist")
+  },
+  {
+    path: "/sortContent",
+    name: "sortContent",
+
+    // hidden: true,
+    component: () => import("@/views/uninform/sortContent")
+  },
+  {
+    path: "/community",
+    name: "community",
+
+    // hidden: true,
+    component: () => import("@/views/Community/index")
+  },
+  {
+    path: "/communityview",
+    name: "communityview",
+
+    // hidden: true,
+    component: () => import("@/views/Community/view")
+  },
+  {
+    path: "/communitylist/:departmentNo",
+    name: "communitylist",
+    // hidden: true,
+    component: () => import("@/views/Community/list")
+  },
+  {
+    path: "/Special/:SpecialId",
+    name: "Specialindex",
+
+    // hidden: true,
+    component: () => import("@/views/Special/index")
+  },
+  {
+    path: "/Specialcategory/:categoryId",
+    name: "Specialcategoryindex",
+
+    // hidden: true,
+    component: () => import("@/views/Special/specialcategory")
+  },
+  {
+    path: "/Specialview/:Id",
+    name: "Specialview",
+
+    // hidden: true,
+    component: () => import("@/views/Special/view")
+  },
 ];

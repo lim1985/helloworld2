@@ -1,7 +1,14 @@
 <template>
-  <div class="hello">
-    <LimGrid></LimGrid>
-      {{msg}}
+  <div class="Limgrid">
+<!-- <van-grid :column-num="3">
+  <van-grid-item v-for="value in 6" :key="value" icon="photo-o" text="文字" />
+</van-grid> -->
+  <van-grid :column-num="2">
+  <van-grid-item @click="routerPush('Uflist')" icon="photo-o" text="稿件管理" />
+  <van-grid-item  @click="routerPush('UffilesList')" icon="photo-o" text="资料管理" />
+  <van-grid-item @click="routerPush('http://info.dxzc.gov.cn/sl/shareadd.html')" icon="photo-o" text="推稿登记" />
+  <van-grid-item @click="routerPush('http://info.dxzc.gov.cn/sl/sharelink.html')" icon="photo-o" text="链接录入" />
+  </van-grid>
   </div>
 </template>
 
@@ -10,7 +17,7 @@ import Vue from "vue";
 import { Tel, MD5Tel, ReportId, IsshowNav } from "@/store/mutation-types";
 
 // import { mapState} from 'vuex'
-import LimGrid from '@/components/Index/grid/'
+// import navigations from '@/components/nav/'
 // Vue.filter('dateformat',function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss'){return moment(dataStr).format(pattern)})
 import {
   // getUserInfo,
@@ -24,9 +31,8 @@ import _ from "lodash";
 //  import moment from 'moment'
 //  var moment = require('moment');
 export default {
-  name: "HelloWorld",
+  name: "Limgrid",
   components: {
-    LimGrid
     // navigations
   },
   //     computed:{
@@ -68,7 +74,25 @@ export default {
     };
   },
   methods: {
+    hrefto(url)
+    {
+        window.location.href=url
+    },
+   routerPush(router)
+  {
+    //   this.$router.push({name:router})
+
+    if(JSON.stringify(router).indexOf('http')==-1)
+    {
+        this.$router.push({name:router})
+    }
+    else
+    {
+        this.hrefto(router)
+    }
    
+        console.log(router)
+  }
     // 校验函数返回 true 表示校验通过，false 表示不通过
   }
 };

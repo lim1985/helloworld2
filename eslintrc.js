@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: ["plugin:vue/strongly-recommended", "@vue/standard"],
   rules: {
-    'no-async-promise-executor': 'error',
+    "no-async-promise-executor": "error",
     "no-console": "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
     "generator-star-spacing": "off",

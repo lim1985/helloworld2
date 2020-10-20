@@ -17,3 +17,4 @@ export const UserInfo = "UserInfo";
 export const Kako_address = "Kako_address";
 export const fromUrl = "fromUrl";
 export const NodeID = "NodeID";
+export const village = "village";

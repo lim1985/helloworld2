@@ -5,14 +5,14 @@
   <div style="padding:5px 5px 5px 5px;">
     <van-nav-bar
       left-text="返回"
-      title="稿件上传"
+      title="资料录入"
       left-arrow
       @click-left="onClickLeft"
     />
 
     <van-row v-if="showform">
       <van-col span="24">
-        <van-form @submit="onSubmit">
+        <van-form @submit="NewOnSubmit">
           <van-row>
             <van-col span="24">
               <span
@@ -20,15 +20,15 @@
     float: left;
     padding: 4px;
     color: rgb(47, 47, 47);"
-                >稿件标题</span
+                >标题</span
               >
             </van-col>
           </van-row>
           <van-field
             v-model="form.title"
             name="标题"
-            placeholder="请填写稿件标题"
-            :rules="[{ required: true, message: '请填写稿件标题' }]"
+            placeholder="请填写标题"
+            :rules="[{ required: true, message: '请填写标题' }]"
           />
 
           <van-divider />
@@ -38,12 +38,12 @@
               <span>
                 <van-cell
                   style="font-size: 16px;
-    float: left;
-    padding: 4px;
-    color:rgb(47, 47, 47);"
+                  float: left;
+                  padding: 4px;
+                  color:rgb(47, 47, 47);"
                   v-model="form.DepartmentName"
                   is-link
-                  title="发稿单位"
+                  title="单位"
                   @click="showDepList = true"
                 ></van-cell>
               </span>
@@ -69,7 +69,7 @@
     float: left;
     padding: 4px;
     color: rgb(47, 47, 47);"
-                    >修改发稿单位</span
+                    >修改单位</span
                   >
                 </van-col>
               </van-row>
@@ -99,14 +99,14 @@
     float: left;
     padding: 4px;
     color: rgb(47, 47, 47);"
-                >稿件第一作者</span
+                >作者</span
               >
             </van-col>
           </van-row>
           <van-field
             v-model="form.firstauthor"
             name="标题"
-            placeholder="请填写稿件唯一作者"
+            placeholder="请填写资料作者"
             :rules="userNameRules"
           />
           <van-divider />
@@ -124,18 +124,18 @@
           <van-field
             v-model="form.keywords"
             name="关键字"
-            placeholder="请填写稿件关键字"
-            :rules="[{ required: false, message: '请填写稿件关键字' }]"
+            placeholder="请填写资料查询关键字"
+            :rules="[{ required: false, message: '请填写资料查询关键字' }]"
           />
-          <!-- <van-divider />
-          <van-row>
+          <van-divider />
+          <!-- <van-row>
             <van-col span="24">
               <span
                 style="font-size: 16px;
     float: left;
     padding: 4px;
     color: rgb(47, 47, 47);"
-                >稿件简要描述</span
+                >资料简要描述</span
               >
             </van-col>
           </van-row>
@@ -145,35 +145,13 @@
             autosize
             type="textarea"
             maxlength="100"
-            placeholder="输入概要描述"
+            placeholder="输入资料简要描述"
             show-word-limit
             style="font-size:16px;"
-            :rules="[{ required: true, message: '请填写稿件简介' }]"
-          /> -->
-          <van-divider />
-          <van-row>
-            <van-col span="24">
-              <span
-                style="font-size: 16px;
-    float: left;
-    padding: 4px;
-    color: rgb(47, 47, 47);"
-                >稿件内容</span
-              >
-            </van-col>
-          </van-row>
-          <van-field
-            v-model="form.content"
-            rows="3"
-            autosize
-            type="textarea"
-            maxlength="3000"
-            placeholder="稿件内容"
-            show-word-limit
-            style="font-size:16px;"
-            :rules="[{ required: true, message: '请填写稿件内容' }]"
+            :rules="[{ required: true, message: '请填写资料简要描述' }]"
           />
-          <van-divider />
+        
+          <van-divider /> -->
           <van-row>
             <van-col span="24">
               <span
@@ -181,7 +159,7 @@
     float: left;
     padding: 4px;
     color: rgb(47, 47, 47);"
-                >图片上传</span
+                >资料上传</span
               >
             </van-col>
           </van-row>
@@ -190,14 +168,15 @@
               <!-- capture="camera" -->
               <van-uploader
                 ref="myUpload"
+                accept="image/*,.xls,.xlsx,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 v-model="filesList"
                 :preview-size="imgwidth"
+              
                 lazyLoad
-                @delete="deleteimg"
+                @delete="deletefile"
                 :after-read="afterread"
                 :before-delete="beforedelete"
-                :before-read="asyncBeforeRead"
-                :max-count="12"
+                :before-read="asyncBeforeRead"               
               >
                 <!-- capture="camera" -->
                 <!-- v-model="filesList"  -->
@@ -260,6 +239,32 @@
             <img width="100%" :src="imgurl" />
           </van-col>
         </van-row>
+           <van-row>
+          <van-col span="24">
+            <span
+              style="font-size: 16px;
+                    float: left;
+                    padding: 4px;
+                    color: #606266;"
+              >关键字</span
+            >
+          </van-col>
+        </van-row>
+        
+        <van-row>
+          <van-col span="24">
+            <van-field
+              v-model="filekeywords"
+              rows="1"
+              autosize
+              type="textarea"
+              maxlength="100"
+              placeholder="填写关键字"
+              show-word-limit
+              style="font-size:14px;"
+            />
+          </van-col>
+        </van-row>
         <van-row>
           <van-col span="24">
             <span
@@ -267,19 +272,19 @@
                     float: left;
                     padding: 4px;
                     color: #606266;"
-              >描述文字</span
+              >资料描述</span
             >
           </van-col>
-        </van-row>
+        </van-row>        
         <van-row>
           <van-col span="24">
             <van-field
-              v-model="imgText"
+              v-model="fileText"
               rows="3"
               autosize
               type="textarea"
               maxlength="1000"
-              placeholder="图片描述"
+              placeholder="填写描述内容便于查找搜索"
               show-word-limit
               style="font-size:14px;"
             />
@@ -288,7 +293,7 @@
       </div>
       <template #footer>
         <van-button style="margin:0 8px;" size="small">取消</van-button>
-        <van-button size="small" @click="imgSubmit" type="danger"
+        <van-button size="small" @click="fileintorSubmit" type="danger"
           >添加</van-button
         >
       </template>
@@ -327,7 +332,7 @@ import { NodeID, UserInfo } from "@/store/mutation-types"; //MD5Tel AdminInfo
 import {
   // seletDepCount,\
   // singlelupload,
-  getDeplist,
+  // getDeplist,
   getTopId,
   // adddxrm,
   // finduserByTel,
@@ -335,9 +340,10 @@ import {
   // checkAdmin,//检测管理员
   // getUserInfo,
   //  uploads,
+  singlefileUpload,
   singleImageUpload,
-  AddnewsByApp
-
+  AddnewsByApp,
+  AddfilesBymobile
   // CheckTel
 } from "@/api/index";
 // import placesMap from "@/tools/map";
@@ -353,12 +359,14 @@ export default {
     msg: String
   },
   created() {
-   
+    console.log(window.document.referrer);
+    console.log(this.$route);
+    console.log(`created`);
   },
   mounted() {
     this.initImagesWH();
-    // this.GetGenernID();
-   
+    //this.GetGenernID();
+    console.log(this.$refs.myUpload);
     //  this.$set(this.$refs.myUpload,'capture','camera')
     // capture="camera"
     //  this.$refs.myUpload.setAttribute('accept',"")
@@ -392,34 +400,42 @@ export default {
       { required: true, message: "请输入姓名" },
       {
         validator: this.userNameValidator,
-        message: "第一作者只能输入中文，且只能输入4个文字"
+        message: "录入人只能输入中文，且只能输入4个文字"
       }
     ];
 
     return {
+      
       showselectDepList: false,
       camera_type: "",
       showloding: false,
       showform: true,
       showimglist: true,
+      fileText:"",
+      fileExt:"",
       imgText: "",
+      filekeywords:"",
       showimgview: false,
       imgurl: "",
-      formdata: [],
+      filename:"",
       form: {
         keywords: "",
         content: "",
-        firstauthor: "戴小军",
+        firstauthor:  Vue.ls.get(UserInfo).UserName,
         DepartmentName: Vue.ls.get(UserInfo).DepName,
         title: "",
         intors: "",
-        files: [],
-        imgtext: [],
+        fileExt:[],
+        files: [],      
+        filetext:[],
+        filekeywords:[],
+        filename:[],
         GeneralID: ""
       },
       filesList: [],
       i: 1,
       imgData: [],
+      Allfiles: [],
       imgwidth: 0,
       showDepList: false
       // personTitle:''
@@ -481,7 +497,7 @@ export default {
       });
     },
 
-    Getfilesname(ext) {
+    GetTimes() {
       var myDate = new Date();
       var myYear = myDate.getFullYear();
       var myMonth = myDate.getMonth() + 1;
@@ -491,23 +507,39 @@ export default {
       var mySecond = myDate.getSeconds();
       var mytMilliSecond = myDate.getMilliseconds();
       return (
-        "" +
+      
         myYear +
         myMonth +
         mydate +
         myHour +
         myMinute +
         mySecond +
-        mytMilliSecond +
-        "." +
-        ext
+        mytMilliSecond 
+       
       );
     },
 
+  async fileintorSubmit() {
+      this.showform = true;
+      this.showimgview = false;
+
+      console.log(this.filesList);
+      //  let Picindex=this.form.files.length-1
+      this.form.filetext.push(this.fileText);
+      this.form.filekeywords.push(this.filekeywords);
+      this.form.fileExt.push(this.fileExt)
+      this.filekeywords="";
+      this.fileText = "";
+      this.fileExt = "";
+      this.imgurl="";
+
+      console.log(this.form);
+    },
     async imgSubmit() {
       this.showform = true;
       this.showimgview = false;
 
+      console.log(this.filesList);
       //  let Picindex=this.form.files.length-1
       this.form.imgtext.push(this.imgText);
       this.imgText = "";
@@ -518,10 +550,10 @@ export default {
       let Max = 9999999999;
       let Range = Max - Min;
       let Rand = Math.random();
-      return Min + Math.round(Rand * Range);
+      return Min + Math.round(Rand * (Range+this.GetTimes()));
     },
 
-    deleteimg(file, detail, upindex) {
+    deletefile(file, detail, upindex) {
       console.log(file, detail);
 
       this.filesList.splice(upindex, 1);
@@ -532,53 +564,67 @@ export default {
     beforedelete(file, detail) {
       let upindex = detail.index;
       console.log(upindex);
-      this.deleteimg(file, detail, upindex);
+      this.deletefile(file, detail, upindex);
     },
 
-    async afterread(file, detail) 
-    {
-      if (file.content) {
-        // console.log(this.filesList[detail.index])
-        // console.log(file.content.length)
+    async afterread(file, detail) {
+      // console.log(file.type)
+      //    console.log(file.file.type.split('/')[0])
+      console.log(file.content)
+       if (file.content) {
+      if(file.file.type.split('/')[0]=='image')
+      {
+      
         let newbase64 = await this.compress(file.content, 550, 50);
         console.log(newbase64);
         this.filesList[detail.index].content = newbase64;
-      
-        this.form.files.push(file.file);
-        // console.log(this.filesList)
+        this.imgurl = this.filesList[detail.index].content;
+      }
+        this.form.files.push(file.file);  
+        this.form.filename.push(this.filename);      
         this.showimgview = true;
         this.showimglist = false;
-        this.showform = false;
-        this.imgurl = this.filesList[detail.index].content;
+        this.showform = false;       
       }
     },
 
-    asyncBeforeRead(file, detail) {
-      return new Promise((resolve, reject) => {
-        if (file.type !== "image/jpeg" && file.type !== "image/png") {
-          this.$toast("请上传 jpg 或 png 格式图片");
-          reject(false);
-        } else {
-          console.log(detail);
-          console.log(file);
-          // let ext = file.name.split(".")[1];
-
-          let img = new File([file], this.getRandomNum(), {
+    asyncBeforeRead(file) {//detail
+      return new Promise((resolve) => {
+    
+          this.fileExt=file.name.split('.').pop()
+          // let _filename=this.getRandomNum()
+          this.filename=this.getRandomNum()       
+         let  _file = new File([file],file.name , {
             type: file.type
           });
-          this.formdata.push(img);
-          console.log(img);
-          resolve(img);
-        }
+          resolve(_file);
+        // }
       });
     },
+    //singlefileUpload
+     async Postfile(filename,filewords,fileExt,fileText, file) {
+      let files = new FormData();
+      files.append("file", file);
+      files.append("filetext", fileText);
+      files.append("filewords", filewords);
+      files.append("fileExt", fileExt);
+      files.append("fileName", filename);
+// this.form.filekeywords[i],this.form.fileExt[i],this.form.filetext[i], this.form.files[i]
+      let res = Promise.resolve(singlefileUpload(files));
+      let data = await res;
+      if (!data) {
+        return { code: -1 };
+      }
+      if (data.data.result.code == 10000) {
+        console.log(`上传成功`);
+        return data.data.result;
+      }
+    },
     async PostImg(imgText, file) {
-      console.log(file)
       let files = new FormData();
       files.append("file", file);
       files.append("imgtext", imgText);
 
-console.log(files||'没有文件')
       let res = Promise.resolve(singleImageUpload(files));
       let data = await res;
       if (!data) {
@@ -589,80 +635,146 @@ console.log(files||'没有文件')
         return data.data.result;
       }
     },
-    async onSubmit() 
-    {
+     async NewOnSubmit() {
       console.log(`OK`);
-      console.log(this.form.files)
-      this.showloding = true;
-      //let fd = new FormData();
+      this.showloding = true;     
+      let _nodeid =225;
+      let userinfo = Vue.ls.get(UserInfo);
+   
+   
+         let _content = `<p>${this.form.intors}<br/>${this.form.content}</P>`;
+           for (let i = 0; i < this.form.files.length; i++) {
+             this.filesList[i].status = "uploading";
+             this.filesList[i].message = "上传中";
+             let res = await this.Postfile(this.form.filename[i],this.form.filekeywords[i],this.form.fileExt[i],this.form.filetext[i], this.form.files[i]);
+             console.log(res)
+            if (res.code == -1) {
+                      this.$toast.fail(`上传失败`);
+            }
+            if (res.code === 10000) {       
+            this.filesList[i].status = "done";
+            this.filesList[i].message = "上传成功";  
+            _content += res.res._file.content;     
+            this.Allfiles.push(res.res._file);
+          }
+          }
+          let _generalID = await this.GetGenernID();
+      this.Allfiles.forEach(async (item) => {
+        item.GeneralID = _generalID;  
+        // item.tableName=item.fileType=='application'?'PE_U_Soft':"PE_U_Photo"             
+      });
+  // "{"value":{"UserName":"戴小军","DepName":"大祥区行政审批服务局","Tel":"15243990018","status":1,"Abbreviation":"区行政审批服务局","DepID":118},"expire":null}"
+     let formObj = new Object();
+         formObj.DepartmentName = this.form.DepartmentName;
+         formObj.DepartmentID = userinfo.DepID
+         formObj.content = _content;
+         formObj.files = this.Allfiles;
+         formObj.title = this.form.title;
+         formObj.firstauthor = this.form.firstauthor;
+         formObj.keywords = this.form.keywords;
+         formObj.intors = this.form.intors;
+         formObj.NodeID = _nodeid;
+         formObj.UserName = userinfo.UserName;
+        //  formObj.defaultPic = defaultPic;
+         formObj.GeneralID = _generalID;
+         console.log(formObj)
+      let res = await AddfilesBymobile(formObj);
+      if (res.data.code == 10000) {
+        this.$toast.success("上传成功");
+        this.showloding = false;       
+      }
+      setTimeout(() => {
+         this.$router.push({ path: "/Uniformfileslist" });
+      }, 100);
+      // 老的
+      // let fd = new FormData();
+      //  fd.append('title',this.form.title);//传文件
+      //  fd.append('intors',this.form.intors);//传文件
+      //  fd.append('imgtext',this.form.imgtext.join('@@@'));//传文件
+      //  fd.append('GeneralID',this.form.GeneralID);//传文件
+      //  fd.append('NodeID',_nodeid);//传文件
+      //  fd.append('UserName',userinfo.UserName);//nodeID
+      // this.form.files.forEach(item => {
+      //    fd.append('file',item)
+      // });
+
+      // // fd.append('file',file.file);//传文件
+      // setTimeout(async() => {
+      //   let _result=await uploads(fd)
+      //   console.log(_result)
+      //   if(_result.data.result.code==10000)
+      //   {
+      //     this.$toast.success('上传成功')
+      //     this.showloding=false
+      //   }
+      //     this.$router.push({path:'/Uniformlist'})
+      // }, 1000);
+      // 老的结束
+    },
+    async onSubmit() {
+      console.log(`OK`);
+      this.showloding = true;     
       let _nodeid = Vue.ls.get(NodeID);
       let userinfo = Vue.ls.get(UserInfo);
-      let fileslength = this.form.files.length;
+      // let fileslength = this.form.files.length;
       let defaultPic = "";
-
-      console.log(fileslength);
-       let _content = `<p>${this.form.intors}<br/>${this.form.content}</P>`;
-      for (let i = 0; i < this.form.files.length; i++) 
-      {
-       
+        console.log(this.form.files)
+ 
+      let _content = `<p>${this.form.intors}<br/>${this.form.content}</P>`;
+      for (let i = 0; i < this.form.files.length; i++) {
+        //  status: 'uploading',
+        //   message: '上传中...',
         this.filesList[i].status = "uploading";
-        this.filesList[i].message = "上传中";   
-        let res = await this.PostImg(this.form.imgtext[i]||'', this.form.files[i]);
+        this.filesList[i].message = "上传中";
+
+        // this.form.imgtext=[]
+
+        // fd.append('imgtext',this.form.imgtext[i])
+        let res = await this.Postfile(this.form.imgtext[i], this.form.files[i]);
         if (res.code == -1) {
           this.$toast.fail(`上传失败`);
-        }       
-        if (res.code === 10000)
-        {
+        }
+        // let res=await singleImageUpload(filesFd)
+        if (res.code === 10000) {
+          console.log(`1111111111111`);
+
           this.filesList[i].status = "done";
           this.filesList[i].message = "上传成功";
           _content += res.res.imgs.content;
           this.imgData.push(res.res.imgs);
-        }
-        else
-        {
-          this.filesList[i].status = "failed";
-          this.filesList[i].message = "上传失败";
+
+          console.log(res);
         }
       }
-      console.log(this.imgData)
       let _generalID = await this.GetGenernID();
-      console.log(_generalID);
       this.imgData.forEach(async (item, index) => {
         item.GeneralID = _generalID;
         if (index == 0) {
           defaultPic = `${item.localhost}${item._newfilePath}`;
         }
       });
-    if(this.imgData.length>0)
-    {
-       let formObj = new Object();
+
+      let formObj = new Object();
       formObj.DepartmentName = this.form.DepartmentName;
       formObj.content = _content;
       formObj.imges = this.imgData;
       formObj.title = this.form.title;
       formObj.firstauthor = this.form.firstauthor;
       formObj.keywords = this.form.keywords;
-      formObj.intors = _content.substr(0,200)
+      formObj.intors = this.form.intors;
       formObj.NodeID = _nodeid;
       formObj.UserName = userinfo.UserName;
       formObj.defaultPic = defaultPic;
       formObj.GeneralID = _generalID;
-      let newsres = await AddnewsByApp(formObj);   
-      if (newsres.data.code == 10000) {
+      console.log(formObj);
+
+      let res = await AddnewsByApp(formObj);
+
+      if (res.data.code == 10000) {
         this.$toast.success("上传成功");
         this.showloding = false;
-        setTimeout(() => {
-              this.$router.push({ path: "/Uniformlist" });
-        }, 500);      
       }
-      else
-      {
-        this.$toast.success("上传失败，请检查网络");
-        this.showloding = false;
-      }
-    }
-     
-     
+      this.$router.push({ path: "/Uniformfileslist" });
       // 老的
       // let fd = new FormData();
       //  fd.append('title',this.form.title);//传文件
@@ -690,7 +802,7 @@ console.log(files||'没有文件')
     },
     onClickLeft() {
       let vm = this;
-      vm.$router.push({ path: "/Uniformlist" });
+      vm.$router.push({ path: "/Uniformfileslist" });
     }
     //  auth(){
     //   let userinfo=Vue.ls.get(UserInfo)

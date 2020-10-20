@@ -96,9 +96,8 @@
           <!-- 通过 pattern 进行正则校验 -->
 
           <!-- 通过 validator 进行函数校验 -->
-           <van-field
+          <van-field
             label="单位名称"
-          
             :value="form.DepName"
             v-model="form.DepName"
             class="myinput"
@@ -141,7 +140,7 @@
             ]"
           />
           <!-- 通过 validator 进行异步函数校验 -->
-       
+
           <van-popup v-model="showPicker" position="top">
             <van-picker
               show-toolbar
@@ -180,11 +179,16 @@
     <div v-show="loginPanl">
       <van-row>
         <van-col style="padding:5px 5px 0px 5px;border-radius:5px;" span="24">
-          <img alt="Vue logo" height="80%" width="100%" src="../assets/login_bg_top.png" />
+          <img
+            alt="Vue logo"
+            height="80%"
+            width="100%"
+            src="../assets/login_bg_top.png"
+          />
         </van-col>
       </van-row>
       <div :style="setBackground">
-        <van-panel >
+        <van-panel>
           <div class="van-hairline--top">
             <van-field
               class="login_input"
@@ -221,13 +225,13 @@
           </van-field>
         </van-panel>
       </div>
-         <van-row class="nowfooter">
-      <van-col span="24">
-        <div >
-         湖南泛深智能科技有限公司技术支持
-        </div>
-      </van-col>
-    </van-row>
+      <van-row class="nowfooter">
+        <van-col span="24">
+          <div>
+            湖南泛深智能科技有限公司技术支持
+          </div>
+        </van-col>
+      </van-row>
     </div>
   </div>
 </template>
@@ -493,56 +497,55 @@ export default {
     async onSubmit(values) {
       console.log("submit", values);
       console.log(this.form);
-       
+
       let vm = this;
-       if(this.form.DepID==0 || this.form.DepID==null)
-      {
-        this.form.DepName=''
-         vm.$toast.fail(`请选择单位后点【确认】按钮。`)
-        return
+      if (this.form.DepID == 0 || this.form.DepID == null) {
+        this.form.DepName = "";
+        vm.$toast.fail(`请选择单位后点【确认】按钮。`);
+        return;
       }
-    
-  vm.$dialog.confirm({
-  title: '信息确认',
-  message: `单位：${this.form.DepName}<br/>姓名：${this.form.UserName}</br>`,
-})
-  .then(() => {
-    console.log(`提交`)
-    const toast = vm.$toast.loading({
-        duration: 0, // 持续展示 toast
-        forbidClick: true,
-        message: "倒计时 2 秒,数据提交中..."
-      });
-      let second = 2;
-      const timer = setInterval(async () => {
-        second--;
-        if (second) {
-          toast.message = `倒计时 ${second} 秒,数据提交中...`;
-        } else {
-          clearInterval(timer);
-          let res = await adddxrm(this.form);
-          console.log(res);
-          if (res.data.isok) {
-            let count = await seletDepCount({ DepID: this.form.DepID });
-            console.log(count);
-            this.DepCount = count.data.count;
-            this.isPerson = false;
-            this.wasSubmit = true;
-            vm.$toast.success("提交成功");
-          } else {
-            this.isPerson = false;
-            this.wasSubmit = true;
-          }
-          // 手动清除 Toast
-          toast.clear();
-        }
-      }, 1000);
-  })
-  .catch(() => {
-    console.log(`取消`)
-    // on cancel
-  });
-    
+
+      vm.$dialog
+        .confirm({
+          title: "信息确认",
+          message: `单位：${this.form.DepName}<br/>姓名：${this.form.UserName}</br>`
+        })
+        .then(() => {
+          console.log(`提交`);
+          const toast = vm.$toast.loading({
+            duration: 0, // 持续展示 toast
+            forbidClick: true,
+            message: "倒计时 2 秒,数据提交中..."
+          });
+          let second = 2;
+          const timer = setInterval(async () => {
+            second--;
+            if (second) {
+              toast.message = `倒计时 ${second} 秒,数据提交中...`;
+            } else {
+              clearInterval(timer);
+              let res = await adddxrm(this.form);
+              console.log(res);
+              if (res.data.isok) {
+                let count = await seletDepCount({ DepID: this.form.DepID });
+                console.log(count);
+                this.DepCount = count.data.count;
+                this.isPerson = false;
+                this.wasSubmit = true;
+                vm.$toast.success("提交成功");
+              } else {
+                this.isPerson = false;
+                this.wasSubmit = true;
+              }
+              // 手动清除 Toast
+              toast.clear();
+            }
+          }, 1000);
+        })
+        .catch(() => {
+          console.log(`取消`);
+          // on cancel
+        });
     },
     checkUserNamevalidator(val) {
       console.log(val);
@@ -584,7 +587,7 @@ export default {
       } else {
         this.form.Tel = tel;
         this.form.DepName = "";
-        this.form.DepID ="";
+        this.form.DepID = "";
         this.form.status = 0;
       }
     },
@@ -733,7 +736,7 @@ export default {
               this.form.DepName = result.data.userinfo.DepartmentName;
               this.form.DepID = result.data.userinfo.DepID;
               let count = await seletDepCount({ DepID: this.form.DepID });
-           
+
               this.DepCount = count.data.count;
               this.ischeck = true;
               return;
@@ -787,14 +790,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .nowfooter {
- 
-    position:absolute;
-    color:#000;
-    bottom:5;
-    width:100%;
-    height:100px;    
-    text-align:center;
-    background-color: #f7f7f7;
+  position: absolute;
+  color: #000;
+  bottom: 5;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  background-color: #f7f7f7;
 }
 .text_dialog {
   font-size: 16px;

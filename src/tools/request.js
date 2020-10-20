@@ -10,9 +10,9 @@ import axios from "axios";
 // axios.defaults.withCredentials=true;
 const service = axios.create({
   baseURL: "https://wx.daxiang.gov.cn/api/", // https://wx.daxiang.gov.cn/api/ api base_url http://127.0.0.1:3001/api //http://api.dxzc.gov.cn:3000/api"
-  timeout: 5000 // 请求超时时间
+  timeout: 60000 // 请求超时时间
 });
-
+//https://wx.daxiang.gov.cn/api/
 //   const err = (error) => {
 //     if (error.response) {
 //       if (error.status === 403) {
